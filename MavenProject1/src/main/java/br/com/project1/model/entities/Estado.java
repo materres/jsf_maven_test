@@ -18,11 +18,11 @@ public class Estado implements Serializable{
     
     @Id
     @GeneratedValue
-    @Column(name="idEstado", nullable=false)
+    @Column(name="IdEstado", nullable=false)
     private Integer idEstado;
-    @Column(name="nome", length=20, nullable=false)
+    @Column(name="Nome", length=20, nullable=false)
     private String nome;
-    @Column(name="sigla", length=2, nullable=false)
+    @Column(name="Sigla", length=2, nullable=false)
     private String sigla;
 
     @OneToMany

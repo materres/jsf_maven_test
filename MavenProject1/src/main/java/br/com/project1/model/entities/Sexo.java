@@ -20,7 +20,7 @@ public class Sexo implements Serializable {
     
     @Id
     @GeneratedValue
-    @Column(name="idSexo", nullable=false)
+    @Column(name="IdSexo", nullable=false)
     private Integer idSexo;
     @Column(name="Descrição", unique= true, nullable=false, length = 9)
     private String descricao;
