@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -12,32 +11,31 @@ import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
-@Table (name="sexo")
+@Table(name="TipoEndereco")
 
-public class Sexo implements Serializable {
-    
+public class TipoEndereco implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue
-    @Column(name="idSexo", nullable=false)
-    private Integer idSexo;
-    @Column(name="Descrição", unique= true, nullable=false, length = 9)
+    @Column(name="idTipoEndereco",nullable=false)
+    private Integer idTipoEndereco;
+    @Column(name="descricao", nullable=false)
     private String descricao;
+    
+    @OneToMany
+    @ForeignKey(name="TipoEnderecoEndereco")
+    private List<Endereco> enderecos;
 
-    @OneToMany(mappedBy="sexo", fetch = FetchType.LAZY)
-    @ForeignKey(name="PessoaSexo")
-    private List<Pessoa> pessoas; 
-    
-    public Sexo() {
-    }
-    
-    public Integer getIdSexo() {
-        return idSexo;
+    public TipoEndereco() {
     }
 
-    public void setIdSexo(Integer idSexo) {
-        this.idSexo = idSexo;
+    public Integer getIdTipoEndereco() {
+        return idTipoEndereco;
+    }
+
+    public void setIdTipoEndereco(Integer idTipoEndereco) {
+        this.idTipoEndereco = idTipoEndereco;
     }
 
     public String getDescricao() {
@@ -48,19 +46,19 @@ public class Sexo implements Serializable {
         this.descricao = descricao;
     }
 
-    public List<Pessoa> getPessoas() {
-        return pessoas;
+    public List<Endereco> getEnderecos() {
+        return enderecos;
     }
 
-    public void setPessoas(List<Pessoa> pessoas) {
-        this.pessoas = pessoas;
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
     }
+
     
-
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 71 * hash + (this.idSexo != null ? this.idSexo.hashCode() : 0);
+        int hash = 5;
+        hash = 83 * hash + (this.idTipoEndereco != null ? this.idTipoEndereco.hashCode() : 0);
         return hash;
     }
 
@@ -75,8 +73,8 @@ public class Sexo implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Sexo other = (Sexo) obj;
-        if (this.idSexo != other.idSexo && (this.idSexo == null || !this.idSexo.equals(other.idSexo))) {
+        final TipoEndereco other = (TipoEndereco) obj;
+        if (this.idTipoEndereco != other.idTipoEndereco && (this.idTipoEndereco == null || !this.idTipoEndereco.equals(other.idTipoEndereco))) {
             return false;
         }
         return true;

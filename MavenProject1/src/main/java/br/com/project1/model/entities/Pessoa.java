@@ -39,7 +39,7 @@ public class Pessoa implements Serializable {
     
     @ManyToOne(optional=false)
     @ForeignKey(name="PessoaSexo")
-    private Pessoa pessoa;
+    private Sexo sexo;
 
     public Pessoa() {
     }
