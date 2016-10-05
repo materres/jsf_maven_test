@@ -3,9 +3,9 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property><!-- Define o driver de conexão com o bd -->
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/semeru_jsf_maven_db?createDatabaseIfNotExist=true</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/project1_jsf_maven_db?createDatabaseIfNotExist=true</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password"></property>
+        <property name="hibernate.connection.password">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
     
     <!-- CONFIGURAÇÕES DE CONEXÃO COM O BD -->
@@ -27,13 +27,13 @@
         <property name="c3p0.idle_test_period">300</property>
         
         <!-- LISTA DE ENTIDADES -->
-        <mapping class="br.com.semeru.model.entities.Cidade"/>        
-        <mapping class="br.com.semeru.model.entities.Endereco"/>      
-        <mapping class="br.com.semeru.model.entities.Estado"/>      
-        <mapping class="br.com.semeru.model.entities.Pessoa"/>               
-        <mapping class="br.com.semeru.model.entities.Sexo"/>
-        <mapping class="br.com.semeru.model.entities.TipoEndereco"/>
-        <mapping class="br.com.semeru.model.entities.TipoLogradouro"/>
-    
+        <mapping class="br.com.project1.model.entities.Cidade"/>        
+        <mapping class="br.com.project1.model.entities.Endereco"/>      
+        <mapping class="br.com.project1.model.entities.Estado"/>      
+        <mapping class="br.com.project1.model.entities.Pessoa"/>               
+        <mapping class="br.com.project1.model.entities.Sexo"/>
+        <mapping class="br.com.project1.model.entities.TipoEndereco"/>
+        <mapping class="br.com.project1.model.entities.TipoLogradouro"/>
+            
   </session-factory>
 </hibernate-configuration>

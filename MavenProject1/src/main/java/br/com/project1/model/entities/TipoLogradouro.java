@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
-@Table(name="TipoLogradouro")
+@Table(name="tipologradouro")
 
 public class TipoLogradouro implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -23,7 +24,7 @@ public class TipoLogradouro implements Serializable {
     @Column(name="Descricao", length=40)
     private String descricao;
     
-    @OneToMany
+    @OneToMany(mappedBy = "tipoLogradouro", fetch = FetchType.LAZY)
     @ForeignKey(name="TipoLogradouroEndereco")
     private List<Endereco> enderecos;
 

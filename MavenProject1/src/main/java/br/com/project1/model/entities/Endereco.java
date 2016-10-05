@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
-@Table(name="Endereco")
+@Table(name="endereco")
 
 public class Endereco implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -22,16 +22,17 @@ public class Endereco implements Serializable {
     @GeneratedValue
     @Column(name="IdEndereco", nullable=false)
     private Integer idEndereco;
-    @Column(name="Bairro", length=60, nullable=false)
+    @Column(name="Bairro", length=60)
     private String bairro;
     @Column(name="CEP", length=9, nullable=false)
     private String cep;
-    @Column(name="Complemento", length=20, nullable=false)
+    @Column(name="Complemento", length=20)
     private String complemento;
     @Column(name="NomeLogradouro", length=80, nullable=false)
     private String nomeLogradouro;
     @Column(name="Numero", nullable=false)
     private Integer numero;
+    
     
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     @ForeignKey(name="PessoaEndereco")
@@ -39,9 +40,9 @@ public class Endereco implements Serializable {
     private Pessoa pessoa;
     
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @ForeignKey(name="CidadeEndereco")
-    @JoinColumn(name = "IdCidade", referencedColumnName = "IdCidade")
-    private Cidade cidade;
+    @ForeignKey(name="TipoLogradouroEndereco")
+    @JoinColumn(name = "IdTipoLogradouro", referencedColumnName = "IdTipoLogradouro")
+    private TipoLogradouro tipoLogradouro;
     
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @ForeignKey(name="EstadoEndereco")
@@ -54,10 +55,10 @@ public class Endereco implements Serializable {
     private TipoEndereco tipoEndereco;
     
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @ForeignKey(name="TipoLogradouroEndereco")
-    @JoinColumn(name = "IdTipoLogradouro", referencedColumnName = "IdTipoLogradouro")
-    private TipoLogradouro tipoLogradouro;
-
+    @ForeignKey(name="CidadeEndereco")
+    @JoinColumn(name = "IdCidade", referencedColumnName = "IdCidade")
+    private Cidade cidade;
+    
     public Endereco() {
         this.pessoa = new Pessoa();
         this.cidade = new Cidade();

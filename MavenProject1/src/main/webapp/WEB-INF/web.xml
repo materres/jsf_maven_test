@@ -15,10 +15,34 @@
         <session-timeout>30</session-timeout>
     </session-config>
     
+     <!-- Endereço dos arquivos de configuração do Spring -->
+    
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/spring-security.xml
+        </param-value>
+    </context-param>
+    
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>smoothness</param-value>
+        <param-value>sam</param-value> <!--<param-value>smoothness</param-value>--> 
     </context-param>
+    
+<!--     Filtros do Spring  
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>    -->
     
     <!-- Configurações do JavaServer Faces -->
     
@@ -57,16 +81,5 @@
         <servlet-name>Resource Servlet</servlet-name>
         <url-pattern>/primefaces_resource/*</url-pattern>
     </servlet-mapping>
-    
-    <!-- Filtros de Upload -->
-    
-<!--    <filter>  
-        <filter-name>PrimeFaces FileUpload Filter</filter-name>  
-        <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>  
-    </filter>  
-    <filter-mapping>  
-        <filter-name>PrimeFaces FileUpload Filter</filter-name>  
-        <servlet-name>Faces Servlet</servlet-name>  
-    </filter-mapping>-->
     
 </web-app>
