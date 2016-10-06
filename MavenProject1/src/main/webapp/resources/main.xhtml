@@ -17,25 +17,29 @@
     <h:body>
 
         <div id="top">
-            <a href="http://www.google.com"><div id="logo"></div></a>
+            <div id="logo"></div>
         </div>
         
-        <div id="menu">
-            <h:form>
-                <p:menubar>
-                    <p:submenu label="Adicionar">
-                        <p:menuitem value="Cidade" url="cadastrarcidade.faces"/>
-                        <p:menuitem value="Estado"/>
-                    </p:submenu>
-                    <p:submenu label="Consultar">
-                        <p:menuitem value="Cidade"/>
-                        <p:menuitem value="Endereço"/>
-                        <p:menuitem value="Estado"/>
-                        <p:menuitem value="Pessoa"/>
-                    </p:submenu>
-                    <p:menuitem value="Sair"/>
-                </p:menubar>
-            </h:form>
+        <div id="top-menu">
+            <div id="menu">
+                <h:form>
+                    <p:menubar>
+                        <p:menuitem value="Início" icon="ui-icon ui-icon-home" 
+                                    url="./home.faces"/>
+                        <p:submenu label="Adicionar" icon="ui-icon ui-icon-plus">
+                            <p:menuitem value="Cidade" url="cadastrarcidade.faces"/>
+                            <p:menuitem value="Pessoa" url="cadastrarpessoa.faces"/>
+                        </p:submenu>
+                        <p:submenu label="Consultar" icon="ui-icon ui-icon-search">
+                            <p:menuitem value="Cidade"/>
+                            <p:menuitem value="Endereço"/>
+                            <p:menuitem value="Estado"/>
+                            <p:menuitem value="Pessoa"/>
+                        </p:submenu>
+                        <p:menuitem value="Sair" icon="ui-icon ui-icon-close"/>
+                    </p:menubar>
+                </h:form>
+            </div>
         </div>
 
         <div id="content">

@@ -23,8 +23,19 @@
 
 #content {
     width: auto;
-    height: 500px;
-    background-image: url(../images/bg1.png);
+    height: 600px;
+    font-size: 12px;
+}
+
+#top-menu {
+    height: 50px;
+    width:  100%;
+    background-color: white;
+}
+
+#menu {
+    float: left;    
+    font-size: 13px;
 }
 
 #bottom {
