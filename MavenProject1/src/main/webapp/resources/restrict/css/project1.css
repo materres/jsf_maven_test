@@ -30,10 +30,10 @@
 #bottom {
     width: auto;
     height: 30px;
-    background-image: url(../images/bg3.jpg);
+    background-image: url(../images/bg1.jpg);
 }
 
 #rodape {
     text-align: left;
-    color: #ffffff;
+    color: #000000;
 }

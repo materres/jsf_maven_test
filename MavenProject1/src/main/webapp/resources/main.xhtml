@@ -19,9 +19,27 @@
         <div id="top">
             <a href="http://www.google.com"><div id="logo"></div></a>
         </div>
+        
+        <div id="menu">
+            <h:form>
+                <p:menubar>
+                    <p:submenu label="Adicionar">
+                        <p:menuitem value="Cidade" url="cadastrarcidade.faces"/>
+                        <p:menuitem value="Estado"/>
+                    </p:submenu>
+                    <p:submenu label="Consultar">
+                        <p:menuitem value="Cidade"/>
+                        <p:menuitem value="Endereço"/>
+                        <p:menuitem value="Estado"/>
+                        <p:menuitem value="Pessoa"/>
+                    </p:submenu>
+                    <p:menuitem value="Sair"/>
+                </p:menubar>
+            </h:form>
+        </div>
 
-        <div id="content" class="center_content">
-            <ui:insert name="content">Content</ui:insert>
+        <div id="content">
+            <ui:insert name="content"></ui:insert>
         </div>
 
         <div id="bottom">
