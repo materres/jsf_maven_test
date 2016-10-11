@@ -9,7 +9,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-@ManagedBean(name = "bbsexo")
+@ManagedBean(name = "bbSexo")
 @RequestScoped
 
 public class BbSexo implements Serializable {
