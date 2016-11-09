@@ -34,7 +34,7 @@ public class Endereco implements Serializable{
     
     @OneToOne(optional = true, fetch = FetchType.LAZY)
     @ForeignKey(name = "PFEndereco")
-    @JoinColumn(name = "pf", insertable = false, updatable = false)
+    @JoinColumn(name = "cliente", insertable = false, updatable = false)
     private Cliente cliente;
     
     @OneToOne(optional = true, fetch = FetchType.LAZY)
