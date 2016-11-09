@@ -1,0 +1,202 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:sec="http://www.springframework.org/security/tags"
+                template="./../../resources/main.xhtml">
+
+    <ui:define name="content">
+        <br/>
+        <p:fieldset legend="Cadastrar Corretores">
+            <h:form>
+                <p:wizard nextLabel="Próxima Aba" backLabel="Aba Anterior">
+                    <p:tab title="Informações Pessoais" id="infoPessoa">
+                        <p:panel header="Informações Pessoais">
+                            <p:growl id="msgo"/>
+                            <h:panelGrid columns="2" cellpadding="10" styleClass="panelGrid"
+                                         id="grid0">
+                                <h:outputLabel/>
+                                <h:inputHidden id="idcorretor" value="#{mbCorretor.corretor.id}"/>
+                                <h:outputLabel for="cpf" value="CPF.:"/>
+                                <p:inputText id="cpf" size="15" value="#{mbCorretor.corretor.cpf}" 
+                                             required="true" requiredMessage="O campo [CPF] é obrigatório">
+                                    <f:validator validatorId="cpfValidator"/>
+                                </p:inputText>
+                                
+                                <h:outputLabel for="nomeCorretor" value="Nome:"/>
+                                <p:inputText id="nomeCorretor" size="40" 
+                                             value="#{mbCorretor.corretor.nome}" required="true"
+                                             requiredMessage="O campo [Nome] é obrigatório"
+                                             onkeyup="this.value = this.value.toUpperCase()"/>
+                                
+                                <h:outputLabel for="telefoneA" value="Telefone.:"/>
+                                <p:inputMask id="telefoneA" size="15" value="#{mbCorretor.corretor.telefoneA}" 
+                                             required="true" requiredMessage="O campo [TELEFONE] é obrigatório"
+                                             mask="(99) 9999-9999"/>
+                                
+                                <h:outputLabel for="ramalA" value="Ramal:"/>
+                                <p:inputText id="ramalA" size="10" 
+                                             value="#{mbCorretor.corretor.ramalA}"/>
+                                
+                                <h:outputLabel for="telefoneB" value="Telefone:"/>
+                                <p:inputMask id="telefoneB" size="15" value="#{mbCorretor.corretor.telefoneB}" 
+                                             mask="(99) 9999-9999"/>
+                                
+                                <h:outputLabel for="ramalB" value="Ramal:"/>
+                                <p:inputText id="ramalB" size="10" 
+                                             value="#{mbCorretor.corretor.ramalB}"/>
+                                
+                                <h:outputLabel for="email" value="Email.:"/>
+                                <p:inputText id="email" size="25" value="#{mbCorretor.corretor.email}" 
+                                             required="true" requiredMessage="O campo [EMAIL] é obrigatório">
+                                    <f:validator validatorId="emailValidator"/>
+                                </p:inputText>
+                                
+                                <h:outputLabel for="dataNascimento" value="Data de Nascimento.:"/>
+                                <p:calendar id="dataNascimento" value="#{mbCorretor.corretor.dataNascimento}" 
+                                             required="true" requiredMessage="O campo [DATADENASCIMENTO] é obrigatório"
+                                             locale="pt_BR" navigator="true" effect="fold" pattern="dd/MM/yyyy"
+                                             mindate="#{bbData.dataInicial}" maxdate="#{bbData.dataAtual}" />
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>                    
+                    <p:tab title="Informações de Endereço" id="infoEndereco">
+                        <p:panel header="Informações do endereço">
+                            <p:growl id="msg1"/>
+                            <h:panelGrid columns="2" cellpadding="10" styleClass="panelGrid"
+                                id="grid1">
+                                
+                                <h:outputLabel for="pais" value="País:" />
+                                <p:selectOneMenu id="pais" value="#{mbCorretor.pais.id}">
+                                    <f:selectItem itemLabel="Selecione um país" itemValue="#{null}"/> 
+                                    <f:selectItems value="#{mbCorretor.paises}" var="pais" 
+                                                   itemValue="#{pais.id}"
+                                                   itemLabel="#{pais.nome}"/>
+                                    <f:ajax listener="#{mbCorretor.onPaisChange}" event="valueChange" render="uf"/>
+                                </p:selectOneMenu>
+                                
+                                <h:outputLabel for="uf" value="Estado:" />
+                                <p:selectOneMenu id="uf" value="#{mbCorretor.estado.id}">
+                                    <f:selectItem itemLabel="Selecione um Estado " itemValue="#{null}"/> 
+                                    <f:selectItems value="#{mbCorretor.listaEstados}" var="estado" 
+                                                   itemValue="#{estado.id}"
+                                                   itemLabel="#{estado.nome}"/>
+                                    <f:ajax listener="#{mbCorretor.onEstadoChange}" event="change" render="cidade"/>
+                                </p:selectOneMenu>
+                                
+                                <h:outputLabel for="cidade" value="Cidade:"/>
+                                <p:selectOneMenu id="cidade" value="#{mbCorretor.cidade.id}">
+                                    <f:selectItem itemLabel="Selecione uma cidade" itemValue="#{null}"/>
+                                    <f:selectItems value="#{mbCorretor.cidades}" var="cidade" 
+                                                   itemValue="#{cidade.id}"
+                                                   itemLabel="#{cidade.nome}"/>
+                                </p:selectOneMenu>
+                                
+                                <h:outputLabel for="nomelogradouro" value="Nome do Logradouro.:"/>
+                                <p:inputText id="nomelogradouro" size="40" 
+                                             value="#{mbCorretor.endereco.logradouro}" required="true"
+                                             requiredMessage="O campo [Nome do Lofradouro] é obrigatório." 
+                                             onkeyup="this.value = this.value.toUpperCase()" />
+
+                                <h:outputLabel for="numero" value="Número.:"/>
+                                <p:inputText id="numero" size="5" value="#{mbCorretor.endereco.numero}"
+                                             required="true" requiredMessage="O campo [Número] é obrigatório."/>
+
+                                <h:outputLabel for="bairro" value="Bairro:"/>
+                                <p:inputText id="bairro" size="40" value="#{mbCorretor.endereco.bairro}"
+                                             required="true"
+                                             requiredMessage="O campo [Bairro] é obrigatório." 
+                                             onkeyup="this.value = this.value.toUpperCase()"/>
+                                
+                                <h:outputLabel for="complemento" value="Complemento.:"/>
+                                <p:inputText id="complemento" size="20" value="#{mbCorretor.endereco.complemento}" 
+                                             required="false" onkeyup="this.value = this.value.toUpperCase()" />
+                                
+                                <h:outputLabel for="cep" value="CEP.:"/>
+                                <p:inputMask id="cep" size="12" value="#{mbCorretor.endereco.cep}"
+                                             required="true" requiredMessage="O campo [CEP] é obrigatório."
+                                             mask="99999-999"/>
+                                
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Salário e bonificações" id="infoDinheiro">
+                        <p:growl id="msg2"/>
+                        <p:panel header="Salário e Bonificações">
+                            <h:panelGrid columns="2" cellpadding="10" styleClass="panelGrid"
+                                         id="grid2">
+                                <h:outputLabel for="dataInicio" value="Data de Início:"/>
+                                <p:calendar id="dataInicio" value="#{mbCorretor.corretor.dataInicio}"
+                                             required="true" requiredMessage="O campo [DATADEINÍCIO] é obrigatório"
+                                             locale="pt_BR" navigator="true" effect="fold" pattern="dd/MM/yyyy"
+                                             mindate="#{bbData.dataInicial}" maxdate="#{bbData.dataAtual}" />
+                                
+                                <h:outputLabel for="salario" value="Salário básico: "/>
+                                <p:inputNumber id="salario" value="#{mbCorretor.corretor.salario}" 
+                                               required="true" requiredMessage="O campo [SALÁRIO] é obrigatório."
+                                               thousandSeparator="." decimalSeparator="," 
+                                               symbol="R$ "/>
+                                
+                                <h:outputLabel for="bonus" value="Bonificação: "/>
+                                <p:inputNumber id="bonus" value="#{mbCorretor.corretor.bonus}" 
+                                               required="true"  symbol="%" symbolPosition="s"
+                                               requiredMessage="O campo [BONIFICAÇÃO] é obrigratório."/>
+
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                   
+                    <p:tab title="Informações de Acesso" id="infoAcesso">
+                        <p:growl id="msg3"/>
+                        <p:panel header="Informações de Acesso">
+                            <h:panelGrid columns="2" cellpadding="10" styleClass="panelGrid"
+                                         id="grid3">
+                                <h:outputLabel for="login" value="Nome de usuário: "/>
+                                <p:inputText id="login" size="15" 
+                                             value="#{mbCorretor.corretor.usuario}" required="true"
+                                             requiredMessage="O campo [NOME DE USUÁRIO] é obrigatório."/>
+                                
+                                <h:outputLabel for="senha" value="Senha: "/>
+                                <p:password id="senha" value="#{mbCorretor.senha}" size="20"
+                                            maxlength="20" promptLabel="Digite sua senha"
+                                            weakLabel="Senha fraca" goodLabel="Senha razoável"
+                                            strongLabel="Senha forte" feedback="true"
+                                            required="true" requiredMessage="Senha"/>
+
+                                <h:outputLabel for="senha2" value="Confirma Senha: "/>
+                                <p:password id="senha2" value="#{mbCorretor.corretor.senha}" size="20"
+                                            maxlength="20" promptLabel="Confirme sua senha"
+                                            feedback="true" validator="passwordValidator"/>
+                                
+                                <h:outputLabel for="permissao" value="Permissão de acesso: "/>
+                                <h:selectOneMenu id="permissao" 
+                                                 value="#{mbCorretor.corretor.permissao}">
+                                    <f:selectItem itemLabel="Selecione o tipo de permissão" 
+                                                  itemValue="#{null}"/>
+                                    <f:selectItem itemLabel="Administrador" itemValue="ROLE_ADMIM"/>
+                                    <f:selectItem itemLabel="Usuário" itemValue="ROLE_USER"/>
+                                </h:selectOneMenu>
+                                
+                                <h:inputHidden />
+                                <p:panel>
+                                    <p:commandButton value="Salvar" 
+                                                     action="#{mbCorretor.adicionaCorretor}"
+                                                     image="ui-icon ui-icon-disk" update="@form"/>
+                                    <p:commandButton value="Cancelar"
+                                                     action="#{mbCorretor.limpaTudo}"
+                                                     image="ui-icon ui-icon-close" update="@form"/>
+                                </p:panel>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                </p:wizard>
+            </h:form>
+        </p:fieldset>
+    </ui:define>
+
+</ui:composition>

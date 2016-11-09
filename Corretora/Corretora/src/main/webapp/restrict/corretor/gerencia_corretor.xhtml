@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../resources/main.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+            <p:growl id="msg0" />
+            <p:dataTable id="idTabela" var="corretor" value="#{mbCorretor.corretores}"
+                         paginator="true" rows="10" emptyMessage="Nenhum registro encontrado."
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
+                 <f:facet name="header">Lista de Corretores</f:facet>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nome"/>
+                    </f:facet>
+                    <h:outputText value="#{corretor.nome}"/>
+                </p:column>
+                 
+                 <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Telefone"/>
+                    </f:facet>
+                     <h:outputText value="#{corretor.telefoneA}"/>
+                </p:column>
+                 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Ramal"/>
+                    </f:facet>
+                    <h:outputText value="#{corretor.ramalA}"/>
+                </p:column>
+                 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Endereço"/>
+                    </f:facet>
+                    <h:outputText value="#{corretor.endereco.logradouro}"/>
+                </p:column>
+                 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Salário base"/>
+                    </f:facet>
+                    <h:outputText value="#{corretor.salario}"/>
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Bonificação"/>
+                    </f:facet>
+                    <h:outputText value="#{corretor.bonus}"/>
+                </p:column>
+                 
+                 <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ações"/>
+                        </f:facet>
+                        <p:commandButton value="Editar" image="ui-icon ui-icon-pencil" 
+                                         update="@form" ajax="false"
+                                         action="#{mbCorretor.editaCorretor}">
+                            
+                            <f:setPropertyActionListener value="#{corretor}" 
+                                                         target="#{mbCorretor.corretor}"/>
+                            
+                            <f:setPropertyActionListener value="#{corretor.id}"
+                                                         target="#{mbCorretor.corretor.id}"/>
+                            
+                            <f:setPropertyActionListener value="#{corretor.endereco}"
+                                                         target="#{mbCorretor.endereco}"/>
+
+                        </p:commandButton>
+                     <p:commandButton value="Cancelar" action="#{mbCorretor.limpaTudo}" 
+                                         image="ui-icon ui-icon-trash" update="@form"/>
+                    </p:column>
+            </p:dataTable>
+                
+        </h:form>
+    </ui:define>
+
+</ui:composition>
