@@ -32,9 +32,13 @@ public class Cidade implements Serializable {
     private Estado estado;
     
     @OneToMany(mappedBy = "cidade", fetch = FetchType.LAZY)
-    @ForeignKey(name = "CidadeEndereco")
-    private List<Endereco> enderecos;
+    @ForeignKey(name = "CidadePF")
+    private List<PessoaFisica> pfs;
 
+    @OneToMany(mappedBy = "cidade", fetch = FetchType.LAZY)
+    @ForeignKey(name = "CidadePJ")
+    private List<PessoaJuridica> pjs;
+    
     public Cidade() {
     }
 
@@ -62,12 +66,20 @@ public class Cidade implements Serializable {
         this.estado = estado;
     }
 
-    public List<Endereco> getEnderecos() {
-        return enderecos;
+    public List<PessoaFisica> getPfs() {
+        return pfs;
     }
 
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
+    public void setPfs(List<PessoaFisica> pfs) {
+        this.pfs = pfs;
+    }
+
+    public List<PessoaJuridica> getPjs() {
+        return pjs;
+    }
+
+    public void setPjs(List<PessoaJuridica> pjs) {
+        this.pjs = pjs;
     }
 
     @Override

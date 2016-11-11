@@ -7,13 +7,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 
 public class MbLerPDF {
     private UploadedFile arquivo;
@@ -26,7 +26,11 @@ public class MbLerPDF {
         this.arquivo = arquivo;
     }
     
-    public void carregarArquivo() {
+    public void fileUploadTratamento(FileUploadEvent e) {
+        this.arquivo = e.getFile();
+        
+        System.out.println("PASSEI AQUI");
+        
         if (arquivo != null) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", 
@@ -35,10 +39,9 @@ public class MbLerPDF {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage("Erro!"));
         }
-        
     }
     
-    public void fileUploadCopy() throws IOException {
+    public void fileUploadCopia() throws IOException {
         InputStream entrada = null;
         OutputStream saida = null;
         

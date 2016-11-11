@@ -5,7 +5,6 @@ import br.com.materres.model.dao.HibernateDAO;
 import br.com.materres.model.dao.InterfaceDAO;
 import br.com.materres.model.entities.Cidade;
 import br.com.materres.model.entities.Corretor;
-import br.com.materres.model.entities.Endereco;
 import br.com.materres.model.entities.Estado;
 import br.com.materres.model.entities.Pais;
 import br.com.materres.util.FacesContextUtil;
@@ -27,7 +26,6 @@ public class MbCorretor implements Serializable {
     private static final long serialVersionUID = 1L;
     
     private Corretor corretor = new Corretor();
-    private Endereco endereco = new Endereco();
     private Pais pais = new Pais();
     private Estado estado = new Estado();
     private Cidade cidade = new Cidade();
@@ -46,19 +44,18 @@ public class MbCorretor implements Serializable {
         return corretorDAO;
     }
     
-    private InterfaceDAO<Endereco> enderecoDAO() {
-        InterfaceDAO<Endereco> enderecoDAO = new HibernateDAO<Endereco>(Endereco.class, FacesContextUtil.getRequestSession());
-        return enderecoDAO;
+    public void onPaisChange () {
+        setListaEstados(getEstados());
     }
-     
+    
+    public void onEstadoChange () {
+        setListaCidades(getCidades());
+    }
+    
     public List<Pais> getPaises(){
         InterfaceDAO<Pais> paisDAO = new HibernateDAO<Pais>(Pais.class, 
                 FacesContextUtil.getRequestSession());
         return paisDAO.getEnteties();
-    }
-    
-    public void onPaisChange () {
-        setListaEstados(getEstados());
     }
     
     public List<Estado> getEstados(){
@@ -72,11 +69,7 @@ public class MbCorretor implements Serializable {
         }
        return null;
     }
-    
-    public void onEstadoChange () {
-        setListaCidades(getCidades());
-    }
-    
+
     public List<Cidade> getCidades(){
         InterfaceDAO<Cidade> cidadeDAO = new HibernateDAO<Cidade>(Cidade.class, 
                 FacesContextUtil.getRequestSession());
@@ -91,18 +84,18 @@ public class MbCorretor implements Serializable {
     
     public void limpaTudo() {
         corretor = new Corretor();
-        endereco = new Endereco();
+//        editaCorretor();
     }
     
     public String editaCorretor() {
-        return "/restrict/corretor/adiciona_corretor.htm";
+        return "/restrict/corretor/adiciona_corretor.htm?faces-redirect=true";
     }
     
     public void adicionaCorretor() {
         if ((corretor.getId() == null) || (corretor.getId() == 0)) {
-            endereco.setPais(pais);
-            endereco.setEstado(estado);
-            endereco.setCidade(cidade);
+            corretor.setPais(pais);
+            corretor.setEstado(estado);
+            corretor.setCidade(cidade);
             insereCorretor(corretor);
         } else {
             atualizaCorretor(corretor);
@@ -128,11 +121,10 @@ public class MbCorretor implements Serializable {
         
         if (testaSenha()) {
 //            corretor.setDataInicio(date);
-//            endereco.se
             corretorDAO().save(corretor);
-            enderecoDAO().save(endereco);
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação ocorreu com sucesso.", ""));
+            limpaTudo();
         } else {
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Erro: gravação NÃO ocorreu!", ""));
@@ -141,7 +133,6 @@ public class MbCorretor implements Serializable {
     
     private void atualizaCorretor(Corretor corretor) {
         corretorDAO().update(corretor);
-        enderecoDAO().update(endereco);
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação ocorreu com sucesso.", ""));
     }
@@ -154,15 +145,8 @@ public class MbCorretor implements Serializable {
         this.corretor = corretor;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
     public List<Corretor> getCorretores() {
+        corretores = corretorDAO().getEnteties();
         return corretores;
     }
 

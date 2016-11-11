@@ -27,7 +27,6 @@
         <mapping class="br.com.materres.model.entities.Corretor"/>
         <mapping class="br.com.materres.model.entities.Corretora"/>
         <mapping class="br.com.materres.model.entities.Empresa"/>
-        <mapping class="br.com.materres.model.entities.Endereco"/>
         <mapping class="br.com.materres.model.entities.Estado"/>
         <mapping class="br.com.materres.model.entities.Objeto"/>
         <mapping class="br.com.materres.model.entities.Pais"/>

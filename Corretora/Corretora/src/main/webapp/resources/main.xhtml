@@ -43,9 +43,9 @@
                         </p:submenu>
                         
                         <p:submenu label="Corretores" icon="ui-icon ui-icon-person">
-                            <p:menuitem value="Adicionar" 
+                            <p:menuitem value="Adicionar" icon="ui-icon ui-icon-plus"
                                         url="/restrict/corretor/adiciona_corretor.htm"
-                                        icon="ui-icon ui-icon-plus"/>
+                                        action="#{mbCorretor.limpaTudo}" />
                             <p:menuitem value="Gerenciar" 
                                         url="/restrict/corretor/gerencia_corretor.htm"
                                         icon="ui-icon ui-icon-gear"/>
@@ -59,13 +59,9 @@
                                         url="/restrict/cliente/consulta_cliente.htm"
                                         icon="ui-icon ui-icon-search"/>
                         </p:submenu>
-                        
-                        <f:facet name="options">
-                            <h:outputText style="margin-right: 10px"
-                                          value="#{bbusuariologado.procuraCorretor().getNome()}"/>
-                            <p:menuitem value="Sair" 
-                                             url="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout"/>
-                        </f:facet>      
+                        <p:menuitem value="Sair" 
+                                    url="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout"/>
+     
                     </p:menubar>
                 </h:form>
             </div>

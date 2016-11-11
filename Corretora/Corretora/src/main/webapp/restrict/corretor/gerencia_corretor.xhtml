@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:p="http://primefaces.org/ui"
-                template="./../resources/main.xhtml">
+                template="/resources/main.xhtml">
 
     <ui:define name="content">
         <h:form>
@@ -42,7 +42,7 @@
                     <f:facet name="header">
                         <h:outputText value="Endereço"/>
                     </f:facet>
-                    <h:outputText value="#{corretor.endereco.logradouro}"/>
+                    <h:outputText value="#{corretor.logradouro}"/>
                 </p:column>
                  
                 <p:column>
@@ -72,13 +72,10 @@
                             
                             <f:setPropertyActionListener value="#{corretor.id}"
                                                          target="#{mbCorretor.corretor.id}"/>
-                            
-                            <f:setPropertyActionListener value="#{corretor.endereco}"
-                                                         target="#{mbCorretor.endereco}"/>
 
                         </p:commandButton>
                      <p:commandButton value="Cancelar" action="#{mbCorretor.limpaTudo}" 
-                                         image="ui-icon ui-icon-trash" update="@form"/>
+                                         image="ui-icon ui-icon-circle-close" update="@form"/>
                     </p:column>
             </p:dataTable>
                 

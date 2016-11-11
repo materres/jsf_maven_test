@@ -12,16 +12,12 @@
         <br/>
         <p:fieldset legend="Adiciona Seguro">
             <h:form enctype="multipart/form-data">
-                <p:growl id="msg0" showDetail="true"/>
+                
                     <p:fileUpload label="Escolha o arquivo" allowTypes="/(\.|\/)(pdf)$/"
-                                  mode="simple" skinSimple="true" cancelLabel="Cancelar"
-                                  value="#{mbLerPDF.arquivo}"/>
-                    <p:commandButton value="Carregar" ajax="false" 
-                                     actionListener="#{mbLerPDF.carregarArquivo}"/>
-                    <br/>
-                    <p:commandButton id="extrair" value="Extrair" ajax="false" 
-                                     disabled="true"
-                                     action="#{mbLerPDF.fileUploadCopy}"/>
+                                  mode="advanced" dragDropSupport="false" fileLimit="1"
+                                  update="msg0" uploadLabel="Carregar" cancelLabel="Cancelar"
+                                  fileUploadListener="#{mbLerPDF.fileUploadTratamento}"/>
+                    <p:growl id="msg0" showDetail="true"/>
             </h:form>
         </p:fieldset>
     </ui:define>

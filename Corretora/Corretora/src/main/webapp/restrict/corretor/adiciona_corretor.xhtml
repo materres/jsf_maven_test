@@ -8,7 +8,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pe="http://primefaces.org/ui/extensions"
                 xmlns:sec="http://www.springframework.org/security/tags"
-                template="./../../resources/main.xhtml">
+                template="/resources/main.xhtml">
 
     <ui:define name="content">
         <br/>
@@ -99,26 +99,29 @@
                                 
                                 <h:outputLabel for="nomelogradouro" value="Nome do Logradouro.:"/>
                                 <p:inputText id="nomelogradouro" size="40" 
-                                             value="#{mbCorretor.endereco.logradouro}" required="true"
+                                             value="#{mbCorretor.corretor.logradouro}" required="true"
                                              requiredMessage="O campo [Nome do Lofradouro] é obrigatório." 
                                              onkeyup="this.value = this.value.toUpperCase()" />
 
                                 <h:outputLabel for="numero" value="Número.:"/>
-                                <p:inputText id="numero" size="5" value="#{mbCorretor.endereco.numero}"
+                                <p:inputText id="numero" size="5" 
+                                             value="#{mbCorretor.corretor.numero}"
                                              required="true" requiredMessage="O campo [Número] é obrigatório."/>
 
                                 <h:outputLabel for="bairro" value="Bairro:"/>
-                                <p:inputText id="bairro" size="40" value="#{mbCorretor.endereco.bairro}"
-                                             required="true"
+                                <p:inputText id="bairro" size="40" required="true"
+                                             value="#{mbCorretor.corretor.bairro}"
                                              requiredMessage="O campo [Bairro] é obrigatório." 
                                              onkeyup="this.value = this.value.toUpperCase()"/>
                                 
                                 <h:outputLabel for="complemento" value="Complemento.:"/>
-                                <p:inputText id="complemento" size="20" value="#{mbCorretor.endereco.complemento}" 
+                                <p:inputText id="complemento" size="20" 
+                                             value="#{mbCorretor.corretor.complemento}" 
                                              required="false" onkeyup="this.value = this.value.toUpperCase()" />
                                 
                                 <h:outputLabel for="cep" value="CEP.:"/>
-                                <p:inputMask id="cep" size="12" value="#{mbCorretor.endereco.cep}"
+                                <p:inputMask id="cep" size="12" 
+                                             value="#{mbCorretor.corretor.cep}"
                                              required="true" requiredMessage="O campo [CEP] é obrigatório."
                                              mask="99999-999"/>
                                 

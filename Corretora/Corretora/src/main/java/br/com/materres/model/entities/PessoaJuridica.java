@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
@@ -38,12 +39,32 @@ public class PessoaJuridica implements Serializable {
     @Column(name = "ramalB", length = 10)
     private String ramalB;
     @Column(name = "email", length = 45)
-    private String email;    
+    private String email;
+    @Column(name = "logradouro", nullable = false, length = 45)
+    private String logradouro;
+    @Column(name = "bairro", nullable = false, length = 45)
+    private String bairro;
+    @Column (name = "numero", nullable = false, length = 6)
+    private String numero;
+    @Column(name = "complemento", length = 45)
+    private String complemento;
+    @Column(name = "cep", nullable = false, length = 15)
+    private String cep;
     
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @ForeignKey(name = "PJEndereco")
-    @JoinColumn(name = "idEndereco")
-    private Endereco endereco;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ForeignKey(name = "CidadePJ")
+    @JoinColumn(name = "cidade")
+    private Cidade cidade;
+    
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ForeignKey(name = "EstadoPJ")
+    @JoinColumn(name = "estado")
+    private Estado estado;
+    
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ForeignKey(name = "PaisPJ")
+    @JoinColumn(name = "pais")
+    private Pais pais;
 
     public PessoaJuridica() {
     }
@@ -112,12 +133,68 @@ public class PessoaJuridica implements Serializable {
         this.email = email;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
+    public String getLogradouro() {
+        return logradouro;
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public Cidade getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public Pais getPais() {
+        return pais;
+    }
+
+    public void setPais(Pais pais) {
+        this.pais = pais;
     }
 
     @Override

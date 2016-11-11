@@ -8,12 +8,12 @@
                             http://www.springframework.org/schema/security/spring-security-3.0.xsd">
     
     <http auto-config="true" use-expressions="true">
+        <intercept-url pattern="/restrict/corretot/**" access="hasRole('ROLE_ADMIM')" />
+        <intercept-url pattern="/restrict/cliente/**" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/restrict/seguro/**" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') " />
+        <intercept-url pattern="/restrict/*" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/login.htm" access="permitAll"/>
         <intercept-url pattern="/public/**" access="permitAll"/>
-        <intercept-url pattern="/restrict/cliente/**" access="isAuthenticated()" />
-        <intercept-url pattern="/restrict/seguro/**" access="isAuthenticated()" />
-        <intercept-url pattern="/restrict/corretot/**" access="hasRole(ROLE_ADMIM)" />
-        
         <form-login login-page="/login.htm" 
                     authentication-failure-url="/login.htm?erro"
                     default-target-url="/restrict/home.htm"/>
@@ -29,6 +29,7 @@
             <user-service>
                 <user name = "admin" password = "admin" authorities = "ROLE_ADMIN"/>
                 <user name  = "user" password = "user" authorities = "ROLE_USER"/>
+                <user name  = "guest" password = "guest" authorities = "ROLE_GUEST"/>
             </user-service>
         </authentication-provider>
     </authentication-manager>
@@ -40,4 +41,18 @@
         <b:property name="password" value="root" />
     </b:bean>
     
+    <b:bean id="roleVoter"
+            class="org.springframework.security.access.vote.RoleHierarchyVoter">
+        <b:constructor-arg>
+            <b:bean id="roleHierarchy" 
+               class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+                <b:property name="hierarchy">
+                    <b:value>
+                        ROLE_ADMIN > ROLE_USER
+                        ROLE_USER > ROLE_GUEST
+                    </b:value>
+                </b:property>
+            </b:bean>
+        </b:constructor-arg>
+    </b:bean>
 </b:beans>

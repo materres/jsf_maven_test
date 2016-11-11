@@ -30,9 +30,13 @@ public class Pais implements Serializable{
     private List<Estado> estados;
     
     @OneToMany(mappedBy = "pais", fetch = FetchType.LAZY)
-    @ForeignKey(name = "PaisEndereco")
-    private List<Endereco> enderecos;
+    @ForeignKey(name = "PaisPF")
+    private List<PessoaFisica> pfs;
 
+    @OneToMany(mappedBy = "pais", fetch = FetchType.LAZY)
+    @ForeignKey(name = "PaisPJ")
+    private List<PessoaJuridica> pjs;
+    
     public Pais() {
     }
 
@@ -68,12 +72,20 @@ public class Pais implements Serializable{
         this.estados = estados;
     }
 
-    public List<Endereco> getEnderecos() {
-        return enderecos;
+    public List<PessoaFisica> getPfs() {
+        return pfs;
     }
 
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
+    public void setPfs(List<PessoaFisica> pfs) {
+        this.pfs = pfs;
+    }
+
+    public List<PessoaJuridica> getPjs() {
+        return pjs;
+    }
+
+    public void setPjs(List<PessoaJuridica> pjs) {
+        this.pjs = pjs;
     }
 
     @Override
