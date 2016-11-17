@@ -31,7 +31,7 @@ public class PessoaFisica implements Serializable {
     private String cpf;
     @Column(name = "nome", nullable = false, length = 45)
     private String nome;
-    @Column(name = "telefoneA", length = 14, nullable = false)
+    @Column(name = "telefoneA", nullable = false, length = 14)
     private String telefoneA;
     @Column(name = "telefoneB", length = 14)
     private String telefoneB;
@@ -39,34 +39,34 @@ public class PessoaFisica implements Serializable {
     private String ramalA;
     @Column(name = "ramalB", length = 10)
     private String ramalB;
-    @Column(name = "email", length = 45)
+    @Column(name = "email", nullable = false, length = 45)
     private String email;
     @Column(name = "dataNascimento", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataNascimento;
-    @Column(name = "logradouro", nullable = false, length = 45)
+    @Column(name = "logradouro", length = 45)
     private String logradouro;
-    @Column(name = "bairro", nullable = false, length = 45)
+    @Column(name = "bairro", length = 45)
     private String bairro;
-    @Column (name = "numero", nullable = false, length = 6)
+    @Column (name = "numero", length = 6)
     private String numero;
     @Column(name = "complemento", length = 45)
     private String complemento;
-    @Column(name = "cep", nullable = false, length = 15)
+    @Column(name = "cep",  length = 15)
     private String cep;
     
     
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @ForeignKey(name = "CidadePF")
     @JoinColumn(name = "cidade")
     private Cidade cidade;
     
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @ForeignKey(name = "EstadoPF")
     @JoinColumn(name = "estado")
     private Estado estado;
     
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @ForeignKey(name = "PaisPF")
     @JoinColumn(name = "pais")
     private Pais pais;

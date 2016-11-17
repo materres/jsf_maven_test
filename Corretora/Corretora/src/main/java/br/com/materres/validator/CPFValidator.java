@@ -9,6 +9,7 @@ import javax.faces.validator.ValidatorException;
 
 @FacesValidator("cpfValidator")
 public class CPFValidator implements Validator {
+    
     @Override
     public void validate(FacesContext ctx, UIComponent cmpt,Object valor) throws ValidatorException {
         if (!validaCPF(String.valueOf(valor))) {
@@ -41,15 +42,16 @@ public class CPFValidator implements Validator {
     }
 
     private static boolean isCPFPadrao(String cpf) {
-        if (   cpf.equals("00000000000")||cpf.equals("11111111111")
+        if (   cpf.equals("00000000000")|| cpf.equals("11111111111")
             || cpf.equals("22222222222")|| cpf.equals("33333333333")
             || cpf.equals("44444444444")|| cpf.equals("55555555555")
             || cpf.equals("66666666666")|| cpf.equals("77777777777")
-            || cpf.equals("88888888888")|| cpf.equals("99999999999"))
-        {
+            || cpf.equals("88888888888")|| cpf.equals("99999999999")) {
+            
             return true;
         }
-            return false;
+        
+        return false;
     }
     
     private static String calcDigVerif(String num) {

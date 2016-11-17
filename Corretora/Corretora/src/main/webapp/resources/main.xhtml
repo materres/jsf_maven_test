@@ -39,16 +39,16 @@
                             </p:submenu>
                             <p:menuitem value="Consultar" 
                                         url="/restrict/seguro/consulta_seguro.htm"
-                                        icon="fa fa-search"/>
+                                        icon="ui-icon ui-icon-search"/>
                         </p:submenu>
                         
                         <p:submenu label="Corretores" icon="ui-icon ui-icon-person">
                             <p:menuitem value="Adicionar" icon="ui-icon ui-icon-plus"
                                         url="/restrict/corretor/adiciona_corretor.htm"
                                         action="#{mbCorretor.limpaTudo}" />
-                            <p:menuitem value="Gerenciar" 
+                            <p:menuitem value="Gerenciar" icon="ui-icon ui-icon-gear"
                                         url="/restrict/corretor/gerencia_corretor.htm"
-                                        icon="ui-icon ui-icon-gear"/>
+                                        action="#{mbCorretor.limpaTudo}" />
                         </p:submenu>
                         
                         <p:submenu label="Clientes" icon="ui-icon ui-icon-person">
@@ -58,6 +58,12 @@
                             <p:menuitem value="Consultar" 
                                         url="/restrict/cliente/consulta_cliente.htm"
                                         icon="ui-icon ui-icon-search"/>
+                        </p:submenu>
+                        
+                        <p:submenu label="Seguradoras" icon="ui-icon ui-icon-person">
+                            <p:menuitem value="Adiciona/Gerencia" icon="ui-icon ui-icon-gear"
+                                        url="/restrict/seguradora/gerencia_seguradora.htm" 
+                                        action="#{mbSeguradora.limpaSeguradora}"/>
                         </p:submenu>
                         <p:menuitem value="Sair" 
                                     url="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout"/>

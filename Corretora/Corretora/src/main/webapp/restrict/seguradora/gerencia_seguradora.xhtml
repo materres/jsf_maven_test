@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:sec="http://www.springframework.org/security/tags"
+                template="/resources/main.xhtml">
+
+    <ui:define name="content">
+        <br/>
+        <p:fieldset legend="Cadastrar Seguradora">
+            <br/>
+            <p:tabView dynamic="true" id="tbv0">
+                <p:tab title="Seguradoras">
+                    <h:form prependId="false" id="formSeguradora">
+                        <p:growl id="msgo">
+                            <h:panelGrid columns="2" cellpadding="10" styleClass="panelGrid"
+                                             id="grid0">
+                                <h:outputLabel/>
+                                <h:inputHidden id="idseguradora" value="#{mbSeguradora.seguradora.id}"/>
+                                <h:outputLabel for="cnpj" value="CNPJ.:"/>
+                                <p:inputText id="cnpj" size="18" value="#{mbSeguradora.seguradora.cnpj}" 
+                                             required="true" requiredMessage="O campo [CNPJ] é obrigatório">
+                                    <f:validator validatorId="cnpjValidator"/>
+                                </p:inputText>
+
+                                <h:outputLabel for="nomeSeguradora" value="Nome:"/>
+                                <p:inputText id="nomeSeguradora" size="40" 
+                                             value="#{mbSeguradora.seguradora.nome}" required="true"
+                                             requiredMessage="O campo [Nome] é obrigatório"
+                                             onkeyup="this.value = this.value.toUpperCase()"/>
+
+                                <h:outputLabel for="telefoneA" value="Telefone.:"/>
+                                <p:inputMask id="telefoneA" size="15" value="#{mbSeguradora.seguradora.telefoneA}" 
+                                             required="true" requiredMessage="O campo [TELEFONE] é obrigatório"
+                                             mask="(99) 9999-9999"/>
+
+                                <h:outputLabel for="ramalA" value="Ramal:"/>
+                                <p:inputText id="ramalA" size="10" 
+                                             value="#{mbSeguradora.seguradora.ramalA}"/>
+
+                                <h:outputLabel for="telefoneB" value="Telefone:"/>
+                                <p:inputMask id="telefoneB" size="15" value="#{mbSeguradora.seguradora.telefoneB}" 
+                                             mask="(99) 9999-9999"/>
+
+                                <h:outputLabel for="ramalB" value="Ramal:"/>
+                                <p:inputText id="ramalB" size="10" 
+                                             value="#{mbSeguradora.seguradora.ramalB}"/>
+
+                                <h:outputLabel for="email" value="Email.:"/>
+                                <p:inputText id="email" size="25" value="#{mbSeguradora.seguradora.email}" 
+                                             required="true" requiredMessage="O campo [EMAIL] é obrigatório">
+                                    <f:validator validatorId="emailValidator"/>
+                                </p:inputText>
+                                <h:outputLabel/>
+                                <p:panel>
+                                    <p:commandButton value="Salvar" action="#{mbSeguradora.adicionaSeguradora}" 
+                                                     icon="ui-icon ui-icon-disk" update="@form :formTabela"/>
+                                    <p:commandButton value="Cancelar" actionListener="#{mbSeguradora.limpaSeguradora}"
+                                                     icon="ui-icon ui-icon-close" update="@form"/>
+                                </p:panel>
+                            </h:panelGrid>
+                        </p:growl>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
+            <br/>
+            <br/>
+            <h:form id="formTabela">
+                <p:growl id="msg1" />
+                <p:dataTable id="tabela" var="seguradora" value="#{mbSeguradora.seguradoras}"
+                             paginator="true" rows="5" emptyMessage="Nenhuma seguradora encontrada."
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10">
+                    <f:facet name="header">Lista de Seguradoras</f:facet>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nome"/>
+                        </f:facet>
+                        <h:outputText value="#{seguradora.nome}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Telefone"/>
+                        </f:facet>
+                        <h:outputText value="#{seguradora.telefoneA}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ramal"/>
+                        </f:facet>
+                        <h:outputText value="#{seguradora.ramalA}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Email"/>
+                        </f:facet>
+                        <h:outputText value="#{seguradora.email}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ações"/>
+                        </f:facet>
+                        <p:commandButton value="Editar" icon="ui-icon ui-icon-pencil"
+                                         process="@this" update=":tbv0:formSeguradora">
+                            <f:setPropertyActionListener target="#{mbSeguradora.seguradora}"
+                                                         value="#{seguradora}"/>
+                        </p:commandButton>
+                        <p:commandButton value="Remover" icon="ui-icon ui-icon-trash"
+                                         action="#{mbSeguradora.deletaSeguradora}"
+                                         update="@form">
+                            <f:setPropertyActionListener value="#{seguradora}"
+                                target="#{mbSeguradora.seguradora}"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:fieldset>
+    </ui:define>
+
+</ui:composition>

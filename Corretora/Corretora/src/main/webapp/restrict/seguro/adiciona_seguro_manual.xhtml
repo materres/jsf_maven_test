@@ -11,13 +11,20 @@
     <ui:define name="content">
         <br/>
         <p:fieldset legend="Adiciona Seguro">
-            <h:form enctype="multipart/form-data">
-                
-                    <p:fileUpload label="Escolha o arquivo" allowTypes="/(\.|\/)(pdf)$/"
-                                  mode="advanced" dragDropSupport="false" fileLimit="1"
-                                  update="msg0" uploadLabel="Carregar" cancelLabel="Cancelar"
-                                  fileUploadListener="#{mbSeguro.fileUploadTratamento}"/>
-                    <p:growl id="msg0" showDetail="true"/>
+            <h:form>
+                <br/>
+                <p:wizard nextLabel="Próxima Aba" backLabel="Aba Anterior">
+                    <p:tab title="Informções sobre a Apólice" id="infoApolice">
+                        <p:panel header="Informações sobrea Apólice">
+                            <p:growl id="msg0"/>
+                            <h:panelGrid id="grid0" columns="2" cellpadding="10"
+                                         styleClass="panelGrid">
+                                <h:outputLabel/>
+                                
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                </p:wizard>
             </h:form>
         </p:fieldset>
     </ui:define>
