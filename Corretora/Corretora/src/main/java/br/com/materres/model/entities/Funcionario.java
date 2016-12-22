@@ -1,36 +1,36 @@
 package br.com.materres.model.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.ForeignKey;
 
-
 @Entity
-@Table(name = "pessoaJuridica")
+@Table(name = "funcionario")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipoPJ")
-public class PessoaJuridica implements Serializable {
+@DiscriminatorColumn(name = "tipoFuncionario")
+public class Funcionario implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id @GeneratedValue
-    @Column(name="idPJ", nullable=false)
+    @Column(name="idFuncionario", nullable=false)
     private Integer id;
-    @Column(name = "cnpj", nullable = false, unique = true, length = 18)
-    private String cnpj;
+    @Column(name="cpf", nullable=false, length = 14)
+    private String cpf;
     @Column(name = "nome", nullable = false, length = 45)
     private String nome;
-    @Column(name = "telefoneA", nullable = false, length = 14 )
+    @Column(name = "telefoneA", nullable = false, length = 14)
     private String telefoneA;
     @Column(name = "telefoneB", length = 14)
     private String telefoneB;
@@ -40,33 +40,33 @@ public class PessoaJuridica implements Serializable {
     private String ramalB;
     @Column(name = "email", nullable = false, length = 45)
     private String email;
+    @Column(name = "dataNascimento", nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dataNascimento;
     @Column(name = "logradouro", length = 45)
     private String logradouro;
     @Column(name = "bairro", length = 45)
     private String bairro;
     @Column (name = "numero", length = 6)
-    private String numero;
-    @Column(name = "complemento", length = 45)
     private String complemento;
-    @Column(name = "cep", length = 15)
+    @Column(name = "cep",  length = 15)
     private String cep;
+    @Column(name = "cidade",  length = 30)
+    private String cidade;
+    @Column(name = "estado",  length = 30)
+    private String estado;
+    @Column(name = "dataInicio", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date dataInicio;
+    @Column(name = "salario", nullable = false, length = 25)
+    private String salario;
     
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @ForeignKey(name = "CidadePJ")
-    @JoinColumn(name = "cidade")
-    private Cidade cidade;
+    @ManyToOne(optional = false)
+    @ForeignKey(name = "CorretoraFunc")
+    @JoinColumn(name = "corretora")
+    private Corretora corretora;
     
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @ForeignKey(name = "EstadoPJ")
-    @JoinColumn(name = "estado")
-    private Estado estado;
-    
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @ForeignKey(name = "PaisPJ")
-    @JoinColumn(name = "pais")
-    private Pais pais;
-
-    public PessoaJuridica() {
+    public Funcionario() {
     }
 
     public Integer getId() {
@@ -77,12 +77,12 @@ public class PessoaJuridica implements Serializable {
         this.id = id;
     }
 
-    public String getCnpj() {
-        return cnpj;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getNome() {
@@ -133,6 +133,14 @@ public class PessoaJuridica implements Serializable {
         this.email = email;
     }
 
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
     public String getLogradouro() {
         return logradouro;
     }
@@ -147,14 +155,6 @@ public class PessoaJuridica implements Serializable {
 
     public void setBairro(String bairro) {
         this.bairro = bairro;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
     }
 
     public String getComplemento() {
@@ -173,34 +173,51 @@ public class PessoaJuridica implements Serializable {
         this.cep = cep;
     }
 
-    public Cidade getCidade() {
+    public String getCidade() {
         return cidade;
     }
 
-    public void setCidade(Cidade cidade) {
+    public Date getDataInicio() {
+        return dataInicio;
+    }
+
+    public String getSalario() {
+        return salario;
+    }
+
+    public void setSalario(String salario) {
+        this.salario = salario;
+    }
+
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+    
+    public void setCidade(String cidade) {
         this.cidade = cidade;
     }
 
-    public Estado getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
-    public Pais getPais() {
-        return pais;
+    public Corretora getCorretora() {
+        return corretora;
     }
 
-    public void setPais(Pais pais) {
-        this.pais = pais;
+    public void setCorretora(Corretora corretora) {
+        this.corretora = corretora;
     }
+    
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 41 * hash + (this.id != null ? this.id.hashCode() : 0);
+        int hash = 7;
+        hash = 79 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
@@ -215,12 +232,11 @@ public class PessoaJuridica implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final PessoaJuridica other = (PessoaJuridica) obj;
+        final Funcionario other = (Funcionario) obj;
         if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
         return true;
     }
-    
-    
+
 }

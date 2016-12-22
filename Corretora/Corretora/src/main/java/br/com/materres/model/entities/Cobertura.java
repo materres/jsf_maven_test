@@ -1,7 +1,6 @@
 package br.com.materres.model.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,37 +8,32 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
-@Table(name = "cidade")
-
-public class Cidade implements Serializable {
+@Table(name = "cobertura")
+public class Cobertura implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @Id
-    @GeneratedValue
-    @Column(name="idCidade", nullable=false, unique = true)
+    @Id @GeneratedValue
+    @Column(name = "idCobertura")
     private Integer id;
-    @Column(name = "nome", length = 50)
+    @Column(name = "nome", nullable = false, length = 50)
     private String nome;
-    
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "idEstado")
-    @ForeignKey(name = "EstadoCidade")
-    private Estado estado;
-    
-    @OneToMany(mappedBy = "cidade", fetch = FetchType.LAZY)
-    @ForeignKey(name = "CidadePF")
-    private List<PessoaFisica> pfs;
+    @Column(name = "impSegurada", nullable = false)
+    private Integer impSegurada;
+    @Column(name = "premio", nullable = false)
+    private float premio;
+    @Column(name = "valorFranquia", nullable = false)
+    private float valorFranquia;
 
-    @OneToMany(mappedBy = "cidade", fetch = FetchType.LAZY)
-    @ForeignKey(name = "CidadePJ")
-    private List<PessoaJuridica> pjs;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ForeignKey(name = "ItemCobertura")
+    @JoinColumn(name = "item")
+    private Item item;
     
-    public Cidade() {
+    public Cobertura() {
     }
 
     public Integer getId() {
@@ -58,34 +52,42 @@ public class Cidade implements Serializable {
         this.nome = nome;
     }
 
-    public Estado getEstado() {
-        return estado;
+    public Integer getImpSegurada() {
+        return impSegurada;
     }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
+    public void setImpSegurada(Integer impSegurada) {
+        this.impSegurada = impSegurada;
     }
 
-    public List<PessoaFisica> getPfs() {
-        return pfs;
+    public float getPremio() {
+        return premio;
     }
 
-    public void setPfs(List<PessoaFisica> pfs) {
-        this.pfs = pfs;
+    public void setPremio(float premio) {
+        this.premio = premio;
     }
 
-    public List<PessoaJuridica> getPjs() {
-        return pjs;
+    public float getValorFranquia() {
+        return valorFranquia;
     }
 
-    public void setPjs(List<PessoaJuridica> pjs) {
-        this.pjs = pjs;
+    public void setValorFranquia(float valorFranquia) {
+        this.valorFranquia = valorFranquia;
     }
 
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 23 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 37 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
@@ -100,12 +102,11 @@ public class Cidade implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Cidade other = (Cidade) obj;
+        final Cobertura other = (Cobertura) obj;
         if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
         return true;
     }
 
-    
 }

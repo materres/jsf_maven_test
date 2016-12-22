@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:sec="http://www.springframework.org/security/tags"
+                template="/resources/main.xhtml">
+
+    <ui:define name="content">
+        <br/>
+        <p:fieldset legend="Cadastrar Cliente">
+            <h:form>
+                <p:wizard nextLabel="Próxima Aba" backLabel="Aba Anterior">
+                    <p:tab title="Informações Gerais" id="infoCliente">
+                        <p:panel header="Informações Gerais">
+                            <p:growl id="msgCliente"/>
+                            <h:panelGrid columns="2" cellpadding="10" styleClass="panelGrid"
+                                         id="grid0">
+                                
+                                <p:selectOneRadio id="cadastro" value="#{mbCliente.cadastro}">
+                                    <f:selectItem itemLabel="CPF" itemValue="CPF"/>
+                                    <f:selectItem itemLabel="CNPJ" itemValue="CNPJ"/>
+                                    <f:ajax render="cpf cnpj"/>
+                                </p:selectOneRadio>
+                                <h:inputHidden id="idcliente" value="#{mbCliente.cliente.id}"/>
+                                
+                                <h:outputLabel for="cpf" value="CPF:"/>
+                                <p:inputText id="cpf" size="15" value="#{mbCliente.cliente.cpf}"
+                                             required="true" requiredMessage="O campo [CPF] é obrigatório"
+                                             disabled="#{mbCliente.cadastro == 'CNPJ'}">
+                                    <f:validator validatorId="cpfValidator"/>
+                                </p:inputText>
+                                
+                                <h:outputLabel for="cpf" value="CNPJ:"/>
+                                <p:inputText id="cnpj" size="18" value="#{mbSeguradora.seguradora.cnpj}" 
+                                             required="true" requiredMessage="O campo [CNPJ] é obrigatório"
+                                             disabled="#{mbCliente.cadastro == 'CPF'}">
+                                    <f:validator validatorId="cnpjValidator"/>
+                                </p:inputText>
+                                
+                                <h:outputLabel for="nomeCorretor" value="Nome:"/>
+                                <p:inputText id="nomeCorretor" size="40" 
+                                             value="#{mbCliente.cliente.nome}" required="true"
+                                             requiredMessage="O campo [Nome] é obrigatório"
+                                             onkeyup="this.value = this.value.toUpperCase()"/>
+                                
+                                <h:outputLabel for="telefoneA" value="Telefone.:"/>
+                                <p:inputMask id="telefoneA" size="15" value="#{mbCliente.cliente.telefoneA}" 
+                                             required="true" requiredMessage="O campo [TELEFONE] é obrigatório"
+                                             mask="(99) 9999-9999"/>
+                                
+                                <h:outputLabel for="ramalA" value="Ramal:"/>
+                                <p:inputText id="ramalA" size="10" 
+                                             value="#{mbCliente.cliente.ramalA}"/>
+                                
+                                <h:outputLabel for="telefoneB" value="Telefone:"/>
+                                <p:inputMask id="telefoneB" size="15" value="#{mbCliente.cliente.telefoneB}" 
+                                             mask="(99) 9999-9999"/>
+                                
+                                <h:outputLabel for="ramalB" value="Ramal:"/>
+                                <p:inputText id="ramalB" size="10" 
+                                             value="#{mbCliente.cliente.ramalB}"/>
+                                
+                                <h:outputLabel for="email" value="Email.:"/>
+                                <p:inputText id="email" size="25" value="#{mbCliente.cliente.email}" 
+                                             required="true" requiredMessage="O campo [EMAIL] é obrigatório">
+                                    <f:validator validatorId="emailValidator"/>
+                                </p:inputText>
+                                
+                                <h:outputLabel for="dataNascimento" value="Data de Nascimento/Fundação:"/>
+                                <p:calendar id="dataNascimento" value="#{mbCliente.cliente.dataNascimento}"
+                                             required="true" requiredMessage="O campo [DATADENASCIMENTO] é obrigatório"
+                                             locale="pt_BR" navigator="true" effect="fold" pattern="dd/MM/yyyy"
+                                             mindate="#{bbData.dataInicial}" maxdate="#{bbData.dataAtual}" />
+                                
+                                <h:inputHidden />
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Documentos" id="infoDocs">
+                        <p:panel header="Documentos">
+                            <p:growl id="msgDoc"/>
+                            
+                            <h:panelGrid columns="6" cellpadding="10" styleClass="panelGrid"
+                                         id="gridDoc0">
+                                <h:outputLabel for="rg" value="RG:"/>
+                                <p:inputText id="rg" size="15" value="#{mbCliente.cliente.rg}"/>
+                                
+                                <h:outputLabel for="emissor" value="Orgão Emissor:"/>
+                                <p:inputText id="emissor" size="8" value="#{mbCliente.cliente.emissorRG}"/>
+
+                                <h:outputLabel for="dataEmissao" value="Data de Emissão (dd/mm/aaaa):"/>
+                                <p:calendar id="dataEmissao" value="#{mbCliente.cliente.dataEmissaoRG}"
+                                             locale="pt_BR" navigator="true" effect="fold" pattern="dd/MM/yyyy"
+                                             mindate="#{bbData.dataInicial}" maxdate="#{bbData.dataAtual}" />
+
+                            </h:panelGrid>
+                            <h:panelGrid columns="4" cellpadding="10" styleClass="panelGrid"
+                                        id="gridDoc1">
+                                <h:outputLabel for="cnh" value="CNH:"/>
+                                <p:inputText id="cnh" size="12" value="#{mbCliente.cliente.cnh}" 
+                                              disabled="#{mbCliente.maiorIdade == false}" />
+                                
+                                <h:outputLabel for="categoria" value="Categoria:"/>
+                                <p:inputText id="categoria" size="8" 
+                                             value="#{mbCliente.cliente.categoriaCNH}"
+                                             onkeyup="this.value = this.value.toUpperCase()" 
+                                             disabled="#{mbCliente.maiorIdade == false}" />
+                                                                
+                                <h:outputLabel for="primeira" value="Primeira Habilitação:"/>
+                                <p:calendar id="primeira" value="#{mbCliente.cliente.primeiraCNH}"
+                                             locale="pt_BR" navigator="true" effect="fold" pattern="dd/MM/yyyy"
+                                             mindate="#{bbData.dataInicial}" maxdate="#{bbData.dataAtual}" 
+                                             disabled="#{mbCliente.maiorIdade == false}" />
+                                
+                                <h:outputLabel for="vencimento" value="Vencimento da Habilitação:"/>
+                                <p:calendar id="vencimento" value="#{mbCliente.cliente.validadeCNH}"
+                                             locale="pt_BR" navigator="true" effect="fold" pattern="dd/MM/yyyy"
+                                             mindate="#{bbData.dataInicial}" maxdate="#{bbData.dataAtual}"
+                                             disabled="#{mbCliente.maiorIdade == false}" />
+                                
+                                <h:inputHidden />
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Informações de Endereço" id="infoEndereco">
+                        <p:panel header="Informações do endereço">
+                            <p:growl id="msg1"/>
+                            <h:panelGrid columns="2" cellpadding="10" styleClass="panelGrid"
+                                id="grid1">
+                                
+                                <h:outputLabel for="cidade" value="Cidade:"/>
+                                <p:inputText id="cidade" value="#{mbCliente.cliente.cidade}"
+                                             required="true" requiredMessage="O campo [Cidade] é obrigatório."/>
+                                
+                                <h:outputLabel for="uf" value="Estado:" />
+                                <p:inputText id="esatdo" value="#{mbCliente.cliente.estado}"
+                                             required="true" requiredMessage="O campo [Estado] é obrigatório."/>
+                                
+                                <h:outputLabel for="nomelogradouro" value="Nome do Logradouro.:"/>
+                                <p:inputText id="nomelogradouro" size="40" 
+                                             value="#{mbCliente.cliente.logradouro}" required="true"
+                                             requiredMessage="O campo [Nome do Lofradouro] é obrigatório." 
+                                             onkeyup="this.value = this.value.toUpperCase()" />
+
+                                <h:outputLabel for="bairro" value="Bairro:"/>
+                                <p:inputText id="bairro" size="40" required="true"
+                                             value="#{mbCliente.cliente.bairro}"
+                                             requiredMessage="O campo [Bairro] é obrigatório." 
+                                             onkeyup="this.value = this.value.toUpperCase()"/>
+                                
+                                <h:outputLabel for="complemento" value="Complemento.:"/>
+                                <p:inputText id="complemento" size="20" 
+                                             value="#{mbCliente.cliente.complemento}" 
+                                             required="false" onkeyup="this.value = this.value.toUpperCase()" />
+                                
+                                <h:outputLabel for="cep" value="CEP.:"/>
+                                <p:inputMask id="cep" size="12" 
+                                             value="#{mbCliente.cliente.cep}"
+                                             required="true" requiredMessage="O campo [CEP] é obrigatório."
+                                             mask="99999-999"/>
+                                <h:inputHidden />
+                                <p:panel>
+                                    <p:commandButton value="Salvar" 
+                                                     action="#{mbCliente.adicionaCliente}"
+                                                     image="ui-icon ui-icon-disk" update="@form"
+                                                     disabled=""/>
+                                    <p:commandButton value="Cancelar"
+                                                     action="#{mbCliente.limpaTudo}"
+                                                     image="ui-icon ui-icon-close" update="@form"/>
+                                </p:panel>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                </p:wizard>
+            </h:form>
+        </p:fieldset>
+    </ui:define>
+</ui:composition>

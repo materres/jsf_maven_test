@@ -34,7 +34,7 @@ public class MbSeguradora implements Serializable {
     }
     
     public String editaSeguradora() {
-        return "/restrict/seguradora/gerencia_seguradora.htm";
+        return "/restrict/seguradora/gerencia.htm";
     }
     
     public void adicionaSeguradora(){

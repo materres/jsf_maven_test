@@ -1,6 +1,7 @@
 package br.com.materres.model.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,40 +9,34 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
-@Table(name = "objeto")
-
-public class Objeto implements Serializable {
+@Table(name = "item")
+public class Item<T> implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @Id
-    @GeneratedValue
-    @Column(name="idObjeto", nullable=false, unique = true)
+    @Id @GeneratedValue
+    @Column(name="idItem")
     private Integer id;
-    @Column(name = "nome", nullable = false, length = 50)
-    private String nome;
-    @Column(name = "descricao", nullable = false, length = 100)
-    private String descricao;
-
+        
     @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @ForeignKey(name = "SeguroObjeto")
+    @ForeignKey(name = "SeguroItem")
     private Seguro seguro;
     
-    @ManyToOne(optional = true)
-    @ForeignKey(name = "ClienteObjeto")
-    @JoinColumn(name = "idPF", referencedColumnName = "idPF")
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    @ForeignKey(name = "ItemCobertura")
+    private List<Cobertura> coberturas;
+    
+    @ManyToOne(optional = false)
+    @ForeignKey(name = "ClienteItem")
+    @JoinColumn(name = "cliente")
     private Cliente cliente;
-            
-    @ManyToOne(optional = true)
-    @ForeignKey(name = "EmpresaObjetos")
-    @JoinColumn(name = "idPJ", referencedColumnName = "idPJ")
-    private Empresa empresa;
-
-    public Objeto() {
+    
+    public Item() {
     }
 
     public Integer getId() {
@@ -51,23 +46,7 @@ public class Objeto implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
+    
     public Seguro getSeguro() {
         return seguro;
     }
@@ -84,12 +63,12 @@ public class Objeto implements Serializable {
         this.cliente = cliente;
     }
 
-    public Empresa getEmpresa() {
-        return empresa;
+    public List<Cobertura> getCoberturas() {
+        return coberturas;
     }
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setCoberturas(List<Cobertura> coberturas) {
+        this.coberturas = coberturas;
     }
 
     @Override
@@ -110,7 +89,7 @@ public class Objeto implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Objeto other = (Objeto) obj;
+        final Item other = (Item) obj;
         if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }

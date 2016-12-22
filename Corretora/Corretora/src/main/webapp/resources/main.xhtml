@@ -28,41 +28,43 @@
                         <p:menuitem value="Início" icon="ui-icon ui-icon-home" 
                                     url="/restrict/home.htm"/>
                         
-                        <p:submenu label="Seguros" icon="ui-icon ui-icon-document">
+                        <p:submenu label="Seguros" icon="ui-icon ui-icon-script">
                             <p:submenu label="Adicionar" icon="ui-icon ui-icon-plus">
                                 <p:menuitem value="Automático" 
-                                            url="/restrict/seguro/adiciona_seguro_auto.htm" 
-                                            icon="fa fa-copy"/>
+                                            url="/restrict/seguro/adiciona_auto.htm" 
+                                            icon="ui-icon ui-icon-copy"
+                                            action="#{mbSeguro.limpaTudo}"/>
                                 <p:menuitem value="Manual" 
-                                            url="/restrict/seguro/adiciona_seguro_manual.htm" 
-                                            icon="fa fa-keyboard-o"/>
+                                            url="/restrict/seguro/adiciona.htm" 
+                                            icon="ui-icon ui-icon-pencil"
+                                            action="#{mbSeguro.limpaTudo}"/>
                             </p:submenu>
                             <p:menuitem value="Consultar" 
-                                        url="/restrict/seguro/consulta_seguro.htm"
+                                        url="/restrict/seguro/consulta.htm"
                                         icon="ui-icon ui-icon-search"/>
                         </p:submenu>
                         
                         <p:submenu label="Corretores" icon="ui-icon ui-icon-person">
                             <p:menuitem value="Adicionar" icon="ui-icon ui-icon-plus"
-                                        url="/restrict/corretor/adiciona_corretor.htm"
+                                        url="/restrict/corretor/adiciona.htm"
                                         action="#{mbCorretor.limpaTudo}" />
                             <p:menuitem value="Gerenciar" icon="ui-icon ui-icon-gear"
-                                        url="/restrict/corretor/gerencia_corretor.htm"
+                                        url="/restrict/corretor/gerencia.htm"
                                         action="#{mbCorretor.limpaTudo}" />
                         </p:submenu>
                         
                         <p:submenu label="Clientes" icon="ui-icon ui-icon-person">
-                            <p:menuitem value="Adicionar" 
-                                        url="/restrict/cliente/adiciona_cliente.htm" 
-                                        icon="ui-icon ui-icon-plus"/>
+                            <p:menuitem value="Adicionar" icon="ui-icon ui-icon-plus"
+                                        url="/restrict/cliente/adiciona.htm" 
+                                        action="#{mbCliente.limpaTudo}"/>
                             <p:menuitem value="Consultar" 
-                                        url="/restrict/cliente/consulta_cliente.htm"
+                                        url="/restrict/cliente/consulta.htm"
                                         icon="ui-icon ui-icon-search"/>
                         </p:submenu>
                         
-                        <p:submenu label="Seguradoras" icon="ui-icon ui-icon-person">
+                        <p:submenu label="Seguradoras" icon="ui-icon ui-icon-cart">
                             <p:menuitem value="Adiciona/Gerencia" icon="ui-icon ui-icon-gear"
-                                        url="/restrict/seguradora/gerencia_seguradora.htm" 
+                                        url="/restrict/seguradora/gerencia.htm" 
                                         action="#{mbSeguradora.limpaSeguradora}"/>
                         </p:submenu>
                         <p:menuitem value="Sair" 

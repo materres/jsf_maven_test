@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="./../../resources/main.xhtml">
+
+    <ui:define name="content">
+        <br/>
+        <p:tabView dynamic="true" id="tbv0">
+            <p:tab title="Documento" id="infoApolice">
+                <h:form>
+                    <p:growl id="msgDoc">
+                        <h:panelGrid id="grid" columns="2" styleClass="panelGrid">
+                            <p:fieldset legend="Dados do Documento">
+                                <h:inputHidden id="idseguro"
+                                               value="#{mbSeguro.seguro.id}" />
+                                <h:panelGrid id="gridDoc" columns="4" styleClass="panelGrid">
+                                    
+                                    <h:outputLabel for="numeroApolice" value="Número apólice:" />
+                                    <p:inputText id="numeroApolice" size="30" required="true"
+                                                 requiredMessage="O [NÚMERO DA APÓLICE] é obrigatório."
+                                                 value="#{mbSeguro.seguro.numeroApolice}" />
+                                    <h:outputLabel for="numeroProposta" value="Número proposta:" />
+                                    <p:inputText id="numeroProposta" size="30" required="true"
+                                                 requiredMessage="O [NÚMERO DA PROPOSTA] é obrigatório."
+                                                 value="#{mbSeguro.seguro.numeroProposta}" />
+                                    <h:outputLabel for="emissao" value="Data de Emissão:"/>
+                                    <p:calendar id="emissao" value="#{mbSeguro.seguro.dataEmissao}"
+                                                required="true" requiredMessage="O campo [DATA EMISSÃO] é obrigatório"
+                                                navigator="true" pattern="dd/MM/yyyy" mindate="#{bbDataX.dataEmissao}"
+                                                maxdate="#{bbDataX.dataAtual}"/>
+
+                                    <h:outputLabel for="dataProposta" value="Data da Proposta:"/>
+                                    <p:calendar id="dataProposta" value="#{mbSeguro.seguro.dataProposta}"
+                                                required="true" requiredMessage="O campo [DATA EMISSÃO] é obrigatório"
+                                                navigator="true" pattern="dd/MM/yyyy" mindate="#{bbDataX.dataEmissao}"
+                                                maxdate="#{bbDataX.dataAtual}"/>
+                                    
+                                        <p:outputLabel for="seguradora" value="Seguradora:" />
+                                        <p:selectOneMenu id="seguradora" value="#{mbSeguro.seguradora.id}">
+                                            <f:selectItems value="#{bbSeguradora.seguradoras}" var="seg"
+                                                           itemLabel="#{seg.nome}" itemValue="#{seg.id}" />
+                                        </p:selectOneMenu>
+                                        <h:outputLabel for="ramo" value="Ramo:"/>
+                                        <p:selectOneMenu id="ramo" value="#{mbSeguro.seguro.ramo}">
+                                            <f:selectItem itemLabel="Selecione o ramo" itemValue="#{null}"/>
+                                            <f:selectItem itemLabel="Automóvel" itemValue="Automóvel"/>
+                                            <f:selectItem itemLabel="Casa" itemValue="Casa"/>
+                                        </p:selectOneMenu>
+                                        
+                                        <h:outputLabel for="cliente" value="Cliente: "/>
+                                        <p:inputText id="cliente" value="#{mbSeguro.cliente.nome}"/>
+                                        
+                                </h:panelGrid>
+                            </p:fieldset>
+                            
+                            <p:fieldset legend="Prêmio">
+                                <h:panelGrid id="gridPremio" columns="2" styleClass="panelGrid">
+                                    <h:outputLabel for="liquido" value="Líquido: "/>
+                                    <p:inputText id="pl1" value="#{mbSeguro.premio.premioLiquido}">
+                                        <f:convertNumber type="currency" currencySymbol="R$"
+                                                     locale="pt_BR" />
+                                    </p:inputText>
+                                    
+                                    <h:outputLabel for="adicional" value="Adicional: "/>
+                                    <p:inputText id="adicional" value="#{mbSeguro.premio.premioAdicional}"
+                                                 required="true" requiredMessage="O campo [Adcional] é obrigatório.">
+                                        <f:convertNumber type="currency" currencySymbol="R$"
+                                                     locale="pt_BR" />
+                                    </p:inputText>
+
+                                    <h:outputLabel for="desconto" value="Desconto: "/>
+                                    <p:inputText id="desconto" value="#{mbSeguro.premio.premioDesconto}"
+                                                 required="true" requiredMessage="O campo [Desconto] é obrigatório.">
+                                        <f:convertNumber type="currency" currencySymbol="R$"
+                                                     locale="pt_BR" />
+                                    </p:inputText>
+
+                                    <h:outputLabel for="custo" value="Custo: "/>
+                                    <p:inputText id="custo" value="#{mbSeguro.premio.premioCusto}"
+                                                 required="true" requiredMessage="O campo [Custo] é obrigatório.">
+                                        <f:convertNumber type="currency" currencySymbol="R$"
+                                                     locale="pt_BR" />
+                                    </p:inputText>
+
+                                    <h:outputLabel for="iof" value="IOF: "/>
+                                    <p:inputText id="iof" value="#{mbSeguro.premio.premioIOF}"
+                                                 required="true" requiredMessage="O campo [IOF] é obrigatório.">
+                                        <f:convertNumber type="currency" currencySymbol="R$"
+                                                     locale="pt_BR" />
+                                    </p:inputText>
+
+                                    <h:outputLabel for="total" value="Total: "/>
+                                    <p:inputText id="total" value="#{mbSeguro.premio.premioTotal}"
+                                                 required="true" requiredMessage="O campo [Total] é obrigatório.">
+                                        <f:convertNumber type="currency" currencySymbol="R$"
+                                                     locale="pt_BR" />
+                                    </p:inputText>
+                                </h:panelGrid>
+                            </p:fieldset>
+                            
+                            <p:fieldset legend="Comissão">
+                                <h:panelGrid id="gridComissao" columns="2" styleClass="panelGrid">
+                                    <h:outputLabel for="base" value="Valor Base (R$) :"/>
+                                    <p:inputNumber id="base" value="#{mbSeguro.premio.premioLiquido}" 
+                                                   symbol="R$ " symbolPosition="p" disabled="true"
+                                                   decimalSeparator="," thousandSeparator="."/>
+
+                                    <h:outputLabel for="percentual" value="Taxa da comissão (%): "/>
+                                    
+                                    <p:inputText id="perc" value="#{mbSeguro.premio.percentual}">
+                                        <f:convertNumber type="percent" maxIntegerDigits="2"
+                                                         locale="pt_BR"/>
+                                        <f:ajax event="valueChange" listener="#{mbSeguro.calculaComissao}"
+                                                render="valor"/>
+                                    </p:inputText>
+                                    
+                                    <h:outputLabel for="valor" value="Comissão (R$): "/>
+                                    <p:inputNumber id="valor" value="#{mbSeguro.premio.comissao}" 
+                                                   symbol="R$ " symbolPosition="p" 
+                                                   decimalSeparator="," thousandSeparator="."/>
+                                </h:panelGrid>
+                            </p:fieldset>
+                            
+                            <p:fieldset legend="Corretor Responsável">
+                                <h:panelGrid id="gridPagamento" columns="2" styleClass="panelGrid">
+                                    <h:outputLabel for="corretor" value="Selecione o corretor responsável: "/>
+                                    <p:selectOneMenu id="corretor" value="#{mbSeguro.seguro.corretor}">
+                                        <f:selectItem itemLabel="Selecione o corretor" itemValue="#{null}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                            </p:fieldset>
+                        </h:panelGrid>
+                        <h:panelGrid id="gridSeg" columns="2" styleClass="panelGrid">
+                            
+                        </h:panelGrid>
+                    </p:growl>
+                </h:form>
+            </p:tab>
+            <p:tab title="Parcelas" id="infoParcelas">
+                <h:form>
+                    <p:growl id="msgParcelas">
+                        <p:dataTable id="tabParcelas" var="parcela" 
+                                     value="#{mbSeguro.parcelas}"
+                                     paginator="false" rows="10"
+                                     emptyMessage="Nenhuma parcela cadastrada.">
+                            <f:facet name="header">Parcelas</f:facet>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Numero"/>
+                                </f:facet>
+                                <h:outputText value="#{parcela.numero}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Valor da Parcela"/>
+                                </f:facet>
+                                <h:outputText value="#{parcela.valor}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Forma de Pagamento"/>
+                                </f:facet>
+                                <h:outputText value="#{parcela.formaPagamento}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Data da Quitação"/>
+                                </f:facet>
+                                <h:outputText value="#{parcela.dataQuitacao}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:growl>
+                </h:form>
+            </p:tab>
+            <p:tab title="Comissão" id="infoComissao">
+                <h:form>
+                    <p:growl id="msgComissao">
+                        <h:panelGrid id="gridComissao" columns="2" styleClass="panelGrid">
+                            <h:outputLabel for="base" value="Base da Comissão:"/>
+                            <p:inputText id="base" value="#{mbSeguro.seguro.premioLiquido}"/>
+
+                            <h:outputLabel for="percentual" value="Taxa da comissão (%): "/>
+                            <p:inputText id="percentual" value="#{mbSeguro.seguro.comissaoPercentual}"
+                                           required="true" requiredMessage="O campo [Taxa da Comissão] é obrigatório."/>
+
+                            <h:outputLabel for="valor" value="Valor: "/>
+                            <p:inputText id="valor" value="#{mbSeguro.seguro.comissaoValor}"
+                                           required="true" requiredMessage="O campo [Valor] é obrigatório."/>    
+                        </h:panelGrid>
+                        <br/>
+                        <p:dataTable id="tabParcCom" var="parcela" 
+                                     value="#{mbSeguro.parcelas}"
+                                     paginator="false" rows="10"
+                                     emptyMessage="Nenhuma parcela cadastrada.">
+                            <f:facet name="header">Comissão por Parcela</f:facet>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Base"/>
+                                </f:facet>
+                                <h:outputText value="#{parcela.numero}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Base"/>
+                                </f:facet>
+                                <h:outputText value="#{parcela.valor}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Comissão"/>
+                                </f:facet>
+                                <h:outputText value="#{parcela.comissaoValor}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Comissão"/>
+                                </f:facet>
+                                <h:outputText value="#{parcela.comissaoPercentual}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:growl>
+                </h:form>
+            </p:tab>
+            <p:tab id="infoCliente" title="Cliente">
+                <h:outputLabel value="NÃO CONCLUIDO"/>
+            </p:tab>
+        </p:tabView>
+    </ui:define>
+</ui:composition>

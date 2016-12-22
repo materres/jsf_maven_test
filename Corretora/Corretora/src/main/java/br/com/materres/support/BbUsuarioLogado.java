@@ -25,7 +25,7 @@ public class BbUsuarioLogado implements Serializable{
                 return auth.getName();
             }
         }
-        return "Nulo";
+        return "S/N";
     }
     
     public Corretor procuraCorretor(){

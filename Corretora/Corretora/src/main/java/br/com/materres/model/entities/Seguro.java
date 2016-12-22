@@ -1,15 +1,17 @@
 package br.com.materres.model.entities;
 
+import br.com.materres.model.enums.TipoSeguro;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,7 +19,6 @@ import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "Seguro")
-
 public class Seguro implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -26,50 +27,80 @@ public class Seguro implements Serializable {
     private Integer id;
     @Column(name="numeroApolice", nullable=false, unique = true, length = 30)
     private String numeroApolice;
-    @Column(name = "descricao", length = 90)
-    private String descricao;
-    @Column(name = "dataInicial", nullable = false)
+    @Column(name="numeroProposta", nullable=false, unique = true, length = 30)
+    private String numeroProposta;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ramo", nullable = false, length = 30)
+    private TipoSeguro ramo;
+    
+    
+    @Column(name = "dataProposta", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date dataInicial;
-    @Column(name = "dataFinal", nullable = false)
+    private Date dataProposta;
+    @Column(name = "dataEmissao", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date dataFinal;
-    @Column(name = "valor", nullable = false)
-    private float valor;
-    @Column(name = "premio", nullable = false)
-    private float premio;
+    private Date dataEmissao;
+    @Column(name = "dataVigenciaInicial", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date dataVigenciaInicial;
+    @Column(name = "dataVigenciaFinal", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date dataVigenciaFinal;
+    @Column(name = "dataInclusao", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date dataInclusao;
+    @Column(name = "dataAtualizacao", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date dataAtualizacao;   
     
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @ForeignKey(name = "ObjetoSeguro")
-    @JoinColumn(name = "idObjeto")
-    private Objeto objeto;
+    @Column(name = "numeroParcelas", nullable = false)
+    private Integer numeroParcelas;
+    @Column(name = "prazoParcela", nullable = false)
+    private Integer prazoParcela;
+        
+    @Column(name = "premioLiquido", nullable = false, length = 20)
+    private String premioLiquido;
+    @Column(name = "premioAdicional", nullable = false, length = 20)
+    private String premioAdicional;
+    @Column(name = "premioDesconto", nullable = false, length = 20)
+    private String premioDesconto;
+    @Column(name = "premioCusto", nullable = false, length = 20)
+    private String premioCusto;
+    @Column(name = "premioIOF", nullable = false, length = 20)
+    private String premioIOF;
+    @Column(name = "premioTotal", nullable = false, length = 20)
+    private String premioTotal;
     
+    @Column(name = "codigoInterno", nullable = false, length = 30)
+    private String codigoInterno;
     
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @Column(name = "bonusClasse", nullable = false, length = 20)
+    private String bonusClasse;
+    @Column(name = "bonusPercentual", nullable = false, length = 20)
+    private String bonusPercentual;
+    
+    @Column(name = "comissaoPercentual", nullable = false, length = 10)
+    private String comissaoPercentual;
+    @Column(name = "comissaoValor", nullable = false, length = 20)
+    private String comissaoValor;
+
+    /*    Relacionamentos   */
+    
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @ForeignKey(name = "ClienteSeguro")
-    @JoinColumn(name = "idCliente")
+    @JoinColumn(name = "ClienteFK")
     private Cliente cliente;
-    
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @ForeignKey(name = "EmpresaSeguro")
-    @JoinColumn(name = "idEmpresa")
-    private Empresa empresa;
     
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @ForeignKey(name = "SeguradoraSeguro")
-    @JoinColumn(name = "idSeguradora")
+    @JoinColumn(name = "SeguradoraFK")
     private Seguradora seguradora;
     
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @ForeignKey(name = "CorretorSeguro")
-    @JoinColumn(name = "idCorretor")
+    @JoinColumn(name = "CorretorFK")
     private Corretor corretor;
     
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @ForeignKey(name = "CorretoraSeguro")
-    @JoinColumn(name = "idCorretora")
-    private Corretora corretora;
-
     public Seguro() {
     }
 
@@ -89,52 +120,172 @@ public class Seguro implements Serializable {
         this.numeroApolice = numeroApolice;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getNumeroProposta() {
+        return numeroProposta;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setNumeroProposta(String numeroProposta) {
+        this.numeroProposta = numeroProposta;
     }
 
-    public Date getDataInicial() {
-        return dataInicial;
+    public TipoSeguro getRamo() {
+        return ramo;
     }
 
-    public void setDataInicial(Date dataInicial) {
-        this.dataInicial = dataInicial;
+    public void setRamo(TipoSeguro ramo) {
+        this.ramo = ramo;
+    }
+    
+    public Date getDataProposta() {
+        return dataProposta;
     }
 
-    public Date getDataFinal() {
-        return dataFinal;
+    public void setDataProposta(Date dataProposta) {
+        this.dataProposta = dataProposta;
     }
 
-    public void setDataFinal(Date dataFinal) {
-        this.dataFinal = dataFinal;
+    public Date getDataEmissao() {
+        return dataEmissao;
     }
 
-    public float getValor() {
-        return valor;
+    public void setDataEmissao(Date dataEmissao) {
+        this.dataEmissao = dataEmissao;
     }
 
-    public void setValor(float valor) {
-        this.valor = valor;
+    public Date getDataVigenciaInicial() {
+        return dataVigenciaInicial;
     }
 
-    public float getPremio() {
-        return premio;
+    public void setDataVigenciaInicial(Date dataVigenciaInicial) {
+        this.dataVigenciaInicial = dataVigenciaInicial;
     }
 
-    public void setPremio(float premio) {
-        this.premio = premio;
+    public Date getDataVigenciaFinal() {
+        return dataVigenciaFinal;
     }
 
-    public Objeto getObjeto() {
-        return objeto;
+    public void setDataVigenciaFinal(Date dataVigenciaFinal) {
+        this.dataVigenciaFinal = dataVigenciaFinal;
     }
 
-    public void setObjeto(Objeto objeto) {
-        this.objeto = objeto;
+    public Date getDataInclusao() {
+        return dataInclusao;
+    }
+
+    public void setDataInclusao(Date dataInclusao) {
+        this.dataInclusao = dataInclusao;
+    }
+
+    public Date getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(Date dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }    
+
+    public Integer getNumeroParcelas() {
+        return numeroParcelas;
+    }
+
+    public void setNumeroParcelas(Integer numeroParcelas) {
+        this.numeroParcelas = numeroParcelas;
+    }
+
+    public Integer getPrazoParcela() {
+        return prazoParcela;
+    }
+    
+    public void setPrazoParcela(Integer prazoParcela) {
+        this.prazoParcela = prazoParcela;
+    }
+
+    public String getPremioLiquido() {
+        return premioLiquido;
+    }
+
+    public void setPremioLiquido(String premioLiquido) {
+        this.premioLiquido = premioLiquido;
+    }
+
+    public String getPremioAdicional() {
+        return premioAdicional;
+    }
+
+    public void setPremioAdicional(String premioAdicional) {
+        this.premioAdicional = premioAdicional;
+    }
+
+    public String getPremioDesconto() {
+        return premioDesconto;
+    }
+
+    public void setPremioDesconto(String premioDesconto) {
+        this.premioDesconto = premioDesconto;
+    }
+
+    public String getPremioCusto() {
+        return premioCusto;
+    }
+
+    public void setPremioCusto(String premioCusto) {
+        this.premioCusto = premioCusto;
+    }
+
+    public String getPremioIOF() {
+        return premioIOF;
+    }
+
+    public void setPremioIOF(String premioIOF) {
+        this.premioIOF = premioIOF;
+    }
+
+    public String getPremioTotal() {
+        return premioTotal;
+    }
+
+    public void setPremioTotal(String premioTotal) {
+        this.premioTotal = premioTotal;
+    }
+
+    public String getBonusClasse() {
+        return bonusClasse;
+    }
+
+    public void setBonusClasse(String bonusClasse) {
+        this.bonusClasse = bonusClasse;
+    }
+
+    public String getBonusPercentual() {
+        return bonusPercentual;
+    }
+
+    public void setBonusPercentual(String bonusPercentual) {
+        this.bonusPercentual = bonusPercentual;
+    }
+
+    public String getComissaoPercentual() {
+        return comissaoPercentual;
+    }
+
+    public void setComissaoPercentual(String comissaoPercentual) {
+        this.comissaoPercentual = comissaoPercentual;
+    }
+
+    public String getComissaoValor() {
+        return comissaoValor;
+    }
+
+    public void setComissaoValor(String comissaoValor) {
+        this.comissaoValor = comissaoValor;
+    }
+
+    public String getCodigoInterno() {
+        return codigoInterno;
+    }
+
+    public void setCodigoInterno(String codigoInterno) {
+        this.codigoInterno = codigoInterno;
     }
 
     public Cliente getCliente() {
@@ -143,14 +294,6 @@ public class Seguro implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    }
-
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
     }
 
     public Seguradora getSeguradora() {
@@ -167,14 +310,6 @@ public class Seguro implements Serializable {
 
     public void setCorretor(Corretor corretor) {
         this.corretor = corretor;
-    }
-
-    public Corretora getCorretora() {
-        return corretora;
-    }
-
-    public void setCorretora(Corretora corretora) {
-        this.corretora = corretora;
     }
 
     @Override

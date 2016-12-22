@@ -22,7 +22,7 @@
                                          id="grid0">
                                 <h:outputLabel/>
                                 <h:inputHidden id="idcorretor" value="#{mbCorretor.corretor.id}"/>
-                                <h:outputLabel for="cpf" value="CPF.:"/>
+                                <h:outputLabel for="cpf" value="CPF:"/>
                                 <p:inputText id="cpf" size="15" value="#{mbCorretor.corretor.cpf}" 
                                              required="true" requiredMessage="O campo [CPF] é obrigatório">
                                     <f:validator validatorId="cpfValidator"/>
@@ -71,42 +71,47 @@
                             <h:panelGrid columns="2" cellpadding="10" styleClass="panelGrid"
                                 id="grid1">
                                 
-                                <h:outputLabel for="pais" value="País:" />
-                                <p:selectOneMenu id="pais" value="#{mbCorretor.pais.id}">
-                                    <f:selectItem itemLabel="Selecione um país" itemValue="#{null}"/> 
-                                    <f:selectItems value="#{mbCorretor.paises}" var="pais" 
-                                                   itemValue="#{pais.id}"
-                                                   itemLabel="#{pais.nome}"/>
-                                    <f:ajax listener="#{mbCorretor.onPaisChange}" event="valueChange" render="uf"/>
-                                </p:selectOneMenu>
+                                <h:outputLabel for="cidade" value="Cidade:"/>
+                                <p:inputText id="cidade" value="#{mbCorretor.corretor.cidade}" size="30"
+                                             required="true" requiredMessage="O campo [CIDADE] é obrigatório."/>
                                 
                                 <h:outputLabel for="uf" value="Estado:" />
-                                <p:selectOneMenu id="uf" value="#{mbCorretor.estado.id}">
-                                    <f:selectItem itemLabel="Selecione um Estado " itemValue="#{null}"/> 
-                                    <f:selectItems value="#{mbCorretor.listaEstados}" var="estado" 
-                                                   itemValue="#{estado.id}"
-                                                   itemLabel="#{estado.nome}"/>
-                                    <f:ajax listener="#{mbCorretor.onEstadoChange}" event="change" render="cidade"/>
+                                <p:selectOneMenu id="uf" value="#{mbCorretor.corretor.estado}">
+                                    <f:selectItem itemLabel="Selecione um Estado" itemValue="#{null}"/> 
+                                    <f:selectItem itemLabel="AC" itemValue="Acre"/>
+                                    <f:selectItem itemLabel="AL" itemValue="Alogoas"/>
+                                    <f:selectItem itemLabel="AM" itemValue="Amazonas"/>
+                                    <f:selectItem itemLabel="AP" itemValue="Amapá"/>
+                                    <f:selectItem itemLabel="BA" itemValue="Bahia"/>
+                                    <f:selectItem itemLabel="CE" itemValue="Ceára"/>
+                                    <f:selectItem itemLabel="DF" itemValue="Distrito Federal"/>
+                                    <f:selectItem itemLabel="ES" itemValue="Espírito Santo"/>
+                                    <f:selectItem itemLabel="GO" itemValue="Goiás"/>
+                                    <f:selectItem itemLabel="MA" itemValue="Maranhão"/>
+                                    <f:selectItem itemLabel="MG" itemValue="Minas Gerais"/>
+                                    <f:selectItem itemLabel="MS" itemValue="Mato Grosso do Sul"/>
+                                    <f:selectItem itemLabel="MT" itemValue="Mato Grosso"/>
+                                    <f:selectItem itemLabel="PA" itemValue="Pará"/>
+                                    <f:selectItem itemLabel="PB" itemValue="Paraíba"/>
+                                    <f:selectItem itemLabel="PE" itemValue="Pernambuco"/>
+                                    <f:selectItem itemLabel="PI" itemValue="Piauí"/>
+                                    <f:selectItem itemLabel="PR" itemValue="Paraná"/>
+                                    <f:selectItem itemLabel="RJ" itemValue="Rio de Janeiro"/>
+                                    <f:selectItem itemLabel="RN" itemValue="Rio Grande do Norte"/>
+                                    <f:selectItem itemLabel="RO" itemValue="Rondônia"/>
+                                    <f:selectItem itemLabel="RR" itemValue="Roraima"/>
+                                    <f:selectItem itemLabel="RS" itemValue="Rio Grande do Sul"/>
+                                    <f:selectItem itemLabel="SC" itemValue="Santa Catarina"/>
+                                    <f:selectItem itemLabel="SE" itemValue="Sergipe"/>
+                                    <f:selectItem itemLabel="SP" itemValue="São Paulo"/>
+                                    <f:selectItem itemLabel="TO" itemValue="Tocantins"/>
                                 </p:selectOneMenu>
-                                
-                                <h:outputLabel for="cidade" value="Cidade:"/>
-                                <p:selectOneMenu id="cidade" value="#{mbCorretor.cidade.id}">
-                                    <f:selectItem itemLabel="Selecione uma cidade" itemValue="#{null}"/>
-                                    <f:selectItems value="#{mbCorretor.cidades}" var="cidade" 
-                                                   itemValue="#{cidade.id}"
-                                                   itemLabel="#{cidade.nome}"/>
-                                </p:selectOneMenu>
-                                
+
                                 <h:outputLabel for="nomelogradouro" value="Nome do Logradouro.:"/>
                                 <p:inputText id="nomelogradouro" size="40" 
                                              value="#{mbCorretor.corretor.logradouro}" required="true"
                                              requiredMessage="O campo [Nome do Lofradouro] é obrigatório." 
                                              onkeyup="this.value = this.value.toUpperCase()" />
-
-                                <h:outputLabel for="numero" value="Número.:"/>
-                                <p:inputText id="numero" size="5" 
-                                             value="#{mbCorretor.corretor.numero}"
-                                             required="true" requiredMessage="O campo [Número] é obrigatório."/>
 
                                 <h:outputLabel for="bairro" value="Bairro:"/>
                                 <p:inputText id="bairro" size="40" required="true"
@@ -139,16 +144,14 @@
                                              locale="pt_BR" navigator="true" effect="fold" pattern="dd/MM/yyyy"
                                              mindate="#{bbData.dataInicial}" maxdate="#{bbData.dataAtual}" />
                                 
-                                <h:outputLabel for="salario" value="Salário básico: "/>
-                                <p:inputNumber id="salario" value="#{mbCorretor.corretor.salario}" 
-                                               required="true" requiredMessage="O campo [SALÁRIO] é obrigatório."
-                                               thousandSeparator="." decimalSeparator="," 
-                                               symbol="R$ "/>
+                                <h:outputLabel for="salario" value="Salário básico: R$"/>
+                                <p:inputText id="salario" value="#{mbCorretor.corretor.salario}"
+                                             required="true" requiredMessage="O campo [SALÁRIO] é obrigatório."/>
                                 
                                 <h:outputLabel for="bonus" value="Bonificação: "/>
-                                <p:inputNumber id="bonus" value="#{mbCorretor.corretor.bonus}" 
-                                               required="true"  symbol="%" symbolPosition="s"
-                                               requiredMessage="O campo [BONIFICAÇÃO] é obrigratório."/>
+                                <p:inputText id="bonus" value="#{mbCorretor.corretor.bonus}"
+                                             required="true"  
+                                             requiredMessage="O campo [BONIFICAÇÃO] é obrigratório."/>
 
                             </h:panelGrid>
                         </p:panel>

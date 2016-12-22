@@ -22,17 +22,15 @@
         <property name="c3p0.max_statements">80</property>
         <property name="c3p0.idle_test_period">300</property>
         
-        <mapping class="br.com.materres.model.entities.Cidade"/>
         <mapping class="br.com.materres.model.entities.Cliente"/>
+        <mapping class="br.com.materres.model.entities.Cobertura"/>
         <mapping class="br.com.materres.model.entities.Corretor"/>
         <mapping class="br.com.materres.model.entities.Corretora"/>
-        <mapping class="br.com.materres.model.entities.Empresa"/>
-        <mapping class="br.com.materres.model.entities.Estado"/>
-        <mapping class="br.com.materres.model.entities.Objeto"/>
-        <mapping class="br.com.materres.model.entities.Pais"/>
-        <mapping class="br.com.materres.model.entities.PessoaFisica"/>
-        <mapping class="br.com.materres.model.entities.PessoaJuridica"/>
+        <mapping class="br.com.materres.model.entities.Funcionario"/>
+        <mapping class="br.com.materres.model.entities.Item"/>
+        <mapping class="br.com.materres.model.entities.Parcela"/>
         <mapping class="br.com.materres.model.entities.Seguradora"/>
         <mapping class="br.com.materres.model.entities.Seguro"/>
+        <mapping class="br.com.materres.model.entities.Veiculo"/>
     </session-factory>
 </hibernate-configuration>

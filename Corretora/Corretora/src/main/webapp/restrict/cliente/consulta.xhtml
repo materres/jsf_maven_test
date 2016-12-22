@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:sec="http://www.springframework.org/security/tags"
+                template="/resources/main.xhtml">
+
+    <ui:define name="content">
+        <br/>
+        <p:fieldset legend="Busca Clientes">
+            <h:form id="formBusca">
+                <p:panelGrid id="busca" styleClass="panelGrid">
+                    <h:outputLabel for="tipoBusca" value="Selecione a forma de busca: " />
+                    <p:selectOneRadio id="tipoBusca" value="#{mbCliente.busca}">
+                        <f:selectItem itemLabel="Nome" itemValue="nome"/>
+                        <f:selectItem itemLabel="Sobrenome" itemValue="sobrenome"/>
+                        <f:selectItem itemLabel="CPF" itemValue="cpf"/>
+                        <f:selectItem itemLabel="CNPJ" itemValue="cnpj"/>
+                        <f:selectItem itemLabel="CPF" itemValue="cpf"/>
+                        <f:selectItem itemLabel="Email" itemValue="email"/>
+                        <f:selectItem itemLabel="Bairro" itemValue="bairro"/>
+                        <f:selectItem itemLabel="Cidade" itemValue="cidade"/>
+                        <f:selectItem itemLabel="Estado" itemValue="estado"/>
+                        <f:selectItem itemLabel="Data de Cadastro" itemValue="dataCadastro"/>
+                        <f:selectItem itemLabel="Data de Nascimento" itemValue="dataNascimento"/>
+                        <f:selectItem itemLabel="Última Modificação" itemValue="dataModificacao"/>
+
+                        <f:ajax render="textoBusca dataInicial dataFinal" />
+                    </p:selectOneRadio>
+                    <h:outputLabel for="textoBusca" value="Digite a busca: "/>
+                    <p:inputText id="textoBusca" value="#{mbCliente.valorBusca}"
+                                 size="30" disabled="#{mbCliente.tipoBusca == 'data'}"/>
+
+                    <h:outputLabel for="dataBusca" value="Entre com as datas: "/>
+                    <p:calendar id="dataInicial" value="#{mbCliente.dataInicial}"
+                                                 locale="pt_BR" navigator="true" effect="fold" pattern="dd/MM/yyyy"
+                                                 mindate="#{bbData.dataInicial}" maxdate="#{bbData.dataAtual}" 
+                                                 disabled="#{mbCliente.tipoBusca == 'texto'}"/>
+
+                    <p:calendar id="dataFinal" value="#{mbCliente.dataFinal}"
+                                                 locale="pt_BR" navigator="true" effect="fold" pattern="dd/MM/yyyy"
+                                                 mindate="#{mbCliente.dataInicial}" maxdate="#{bbData.dataAtual}" 
+                                                 disabled="#{mbCliente.tipoBusca == 'texto'}"/>
+
+                </p:panelGrid>
+                <p:commandButton value="Listar" image="ui-icon ui-icon-pencil" 
+                                     update="@form" ajax="false" disabled="#{not (mbCliente.tipoBusca == 'data')}"
+                                     action="#{mbCliente.fazBusca}">
+                </p:commandButton>
+            </h:form>
+        </p:fieldset>
+        <br/>
+        <br/>
+        <p:fieldset legend="Resultados da Busca">
+            <h:form id="formTabela">
+                <p:growl id="msgResultado" />
+                <p:dataTable id="tabelaClientes" value="#{mbCliente.clientes}"
+                             var="cliente" paginator="true" rows="5"
+                             emptyMessage="Nenhum cliente encontrado."
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} 
+                             {PreviousPageLink} {PageLinks} {NextPageLink}
+                             {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
+                    <f:facet name="header">Clientes</f:facet>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nome"/>
+                        </f:facet>
+                        <h:outputText value="#{cliente.nome}"/>
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Telefone"/>
+                        </f:facet>
+                        <h:outputText value="#{cliente.telefoneA}"/>
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ramal"/>
+                        </f:facet>
+                        <h:outputText value="#{cliente.ramalA}"/>
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ações"/>
+                        </f:facet>
+                        <p:commandButton value="Editar/Expandir" ajax="false"
+                                         action="#{mbCliente.fazBusca}"
+                                         icon="ui-icon ui-icon-pencil">
+                            <f:setPropertyActionListener value="#{cliente}"
+                                                         target="#{mbCliente.cliente}"/>
+                            <f:setPropertyActionListener value="#{cliente.id}"
+                                                         target="#{mbCliente.cliente.id}"/>
+                            <f:setPropertyActionListener value="#{cliente.itens}"
+                                                         target="#{mbCliente.cliente.itens}"/>
+                        </p:commandButton>
+                        
+                        <p:commandButton value="Remover" actionListener="#{mbCliente.deletaCliente}"
+                                         icon="ui-icon ui-icon-trash" update="@form">
+                            <p:confirm header="Atenção" icon="ui-icon ui-icon-alert"
+                                       message="Tem certeza que deseja excluir o registro?"/>
+                            <f:setPropertyActionListener value="#{cliente}"
+                                                         target="#{mbCliente.cliente}"/>
+                        </p:commandButton>
+                        <p:confirmDialog global="true" showEffect="fold">
+                            <p:commandButton value="Sim" type="button" 
+                                             styleClass="ui-confirmdialog-yes"/>
+                            <p:commandButton value="Não" type="button"
+                                             styleClass="ui-confirmdialog-no"/>
+                        </p:confirmDialog>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:fieldset>
+    </ui:define>
+</ui:composition>
